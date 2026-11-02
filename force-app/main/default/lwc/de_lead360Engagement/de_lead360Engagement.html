@@ -1,0 +1,20 @@
+<template>
+    <div class="card">
+        <div class="card-header">💬 Engagement History</div>
+        <div class="card-body">
+            <template for:each={items} for:item="e">
+                <div class="engagement-item" key={e.key}>
+                    <div class={e.iconClass}>{e.icon}</div>
+                    <div class="engagement-body">
+                        <div class="engagement-title">{e.title}</div>
+                        <div class="engagement-detail">{e.detail}</div>
+                    </div>
+                    <div class="engagement-side">
+                        <div class="engagement-date">{e.date}</div>
+                        <div class="engagement-status" style={e.statusStyle}>{e.statusLabel}</div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

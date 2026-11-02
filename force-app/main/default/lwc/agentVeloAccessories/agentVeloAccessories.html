@@ -1,0 +1,100 @@
+<template>
+    <div class="acc-wrap">
+        <div class="acc-head">
+            <p class="acc-title">{heading}</p>
+            <p class="acc-sub">Official Velo Genuine Accessories · tap to add to your cart</p>
+        </div>
+
+        <template if:true={heroUrl}>
+            <div class="acc-hero">
+                <img src={heroUrl} alt={modelName} onerror={handleImgError} />
+                <span class="acc-hero-tag">{modelName}</span>
+            </div>
+        </template>
+
+        <div class="acc-filters">
+            <template for:each={categoryChips} for:item="chip">
+                <button
+                    key={chip.key}
+                    class={chip.css}
+                    data-cat={chip.key}
+                    onclick={handleFilter}
+                >
+                    {chip.label}
+                </button>
+            </template>
+        </div>
+
+        <div class="acc-grid">
+            <template for:each={displayItems} for:item="it">
+                <div key={it.id} class={it.cardCss}>
+                    <div class="acc-thumb" style={it.tileStyle}>
+                        <img
+                            src={it.imageUrl}
+                            alt={it.name}
+                            onerror={handleImgError}
+                        />
+                        <template if:true={it.recommended}>
+                            <span class="acc-badge">Popular</span>
+                        </template>
+                        <span class="acc-cat">{it.category}</span>
+                    </div>
+                    <div class="acc-body">
+                        <p class="acc-name">{it.name}</p>
+                        <p class="acc-desc">{it.description}</p>
+                        <div class="acc-row">
+                            <span class="acc-price">{it.priceLabel}</span>
+                            <button
+                                class={it.btnCss}
+                                data-id={it.id}
+                                onclick={handleToggle}
+                            >
+                                {it.btnLabel}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <div class="acc-cart">
+            <div class="acc-cart-info">
+                <span class="acc-cart-count">{cartCount} in cart</span>
+                <span class="acc-cart-total">{cartTotalLabel}</span>
+            </div>
+            <button
+                class="acc-save"
+                onclick={handleSave}
+                disabled={saveDisabled}
+            >
+                {saveLabel}
+            </button>
+        </div>
+
+        <template if:true={savedMessage}>
+            <p class={statusCss}>{savedMessage}</p>
+        </template>
+
+        <template if:true={showTestDrivePrompt}>
+            <div class="acc-next">
+                <p class="acc-next-title">Would you like to Book a Test Drive?</p>
+                <div class="acc-next-btns">
+                    <button class="acc-next-btn" onclick={handleTestDriveYes}>
+                        Yes
+                    </button>
+                    <button class="acc-next-btn acc-next-btn-alt" onclick={handleTestDriveNo}>
+                        No
+                    </button>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={testDriveDeclined}>
+            <p class="acc-status">No problem — your build is saved. Reach out anytime to book a test drive.</p>
+        </template>
+
+        <p class="acc-note">
+            Prices are indicative — confirm final pricing and availability with your Velo dealer.
+        </p>
+    </div>
+</template>

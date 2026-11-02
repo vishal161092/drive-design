@@ -1,0 +1,95 @@
+<template>
+    <div class="ccm-section">
+        <h2 class="ccm-heading">{heading}</h2>
+
+        <div class="ccm-layout">
+            <!-- LEFT: card grid -->
+            <div class="ccm-main">
+                <div class="ccm-tabs" role="tablist">
+                    <template for:each={tabs} for:item="tab">
+                        <button
+                            key={tab.value}
+                            type="button"
+                            class={tab.cssClass}
+                            data-value={tab.value}
+                            onclick={handleTabClick}
+                        >
+                            {tab.label}
+                        </button>
+                    </template>
+                </div>
+
+                <div class="ccm-grid">
+                    <template for:each={pageItems} for:item="item">
+                        <div class="ccm-card" key={item.id} data-title={item.title} onclick={handleCardClick}>
+                            <div class={item.coverClass}>
+                                <span class="ccm-card__badge">{item.model}</span>
+                                <img src={item.image} alt={item.title} class={item.imgClass} loading="lazy" />
+                            </div>
+                            <div class="ccm-card__body">
+                                <a href="#" class="ccm-card__title">{item.title}</a>
+                                <p class="ccm-card__tagline">{item.tagline}</p>
+                                <p class="ccm-card__desc">{item.description}</p>
+                                <div class="ccm-card__data">
+                                    <span class="ccm-card__segment">{item.segment}</span>
+                                    <div class="ccm-card__specs">
+                                        <template for:each={item.chips} for:item="chip">
+                                            <span key={chip.key} class="ccm-card__spec">{chip.text}</span>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ccm-card__footer">
+                                <span class="ccm-chip">{item.category}</span>
+                                <button
+                                    type="button"
+                                    class={item.starClass}
+                                    data-id={item.id}
+                                    onclick={handleToggleFavorite}
+                                    title="Favorite"
+                                >
+                                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                                        <path
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.6"
+                                            d="M12 2.8 14.9 8.9 21.6 9.7 16.8 14.3 18 21 12 17.7 6 21 7.2 14.3 2.4 9.7 9.1 8.9 12 2.8Z"
+                                        />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="ccm-footer">
+                    <div class="ccm-footer__pager">
+                        <button
+                            type="button"
+                            class="ccm-btn ccm-btn_outline"
+                            onclick={handlePrevious}
+                            disabled={isFirstPage}
+                        >
+                            Previous
+                        </button>
+                        <span class="ccm-footer__label">{pageLabel}</span>
+                        <button
+                            type="button"
+                            class="ccm-btn ccm-btn_outline"
+                            onclick={handleNext}
+                            disabled={isLastPage}
+                        >
+                            Next
+                        </button>
+                    </div>
+                    <a href="#" class="ccm-footer__viewall" onclick={handleViewAll}>View All</a>
+                </div>
+            </div>
+
+            <!-- RIGHT: campaigns / collateral / shared files panel -->
+            <aside class="ccm-aside">
+                <c-de_active-campaigns-rail max-rows="12"></c-de_active-campaigns-rail>
+            </aside>
+        </div>
+    </div>
+</template>

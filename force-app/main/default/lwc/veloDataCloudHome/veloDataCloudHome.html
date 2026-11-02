@@ -1,0 +1,189 @@
+<template>
+  <div class="tm-home">
+
+    <!-- ===== Header ===== -->
+    <div class="hdr">
+      <div class="hdr-left">
+        <h1>VELO MOTORS PV — Data Cloud Home</h1>
+        <div class="subtitle">Connected Customer Data Platform</div>
+      </div>
+      <template lwc:if={hasData}>
+        <div class="hdr-right">
+          <div>Last refreshed: {data.lastRefreshed}</div>
+          <div class="org-id">Org: {data.orgId}</div>
+        </div>
+      </template>
+    </div>
+
+    <!-- ===== States ===== -->
+    <template lwc:if={loading}><div class="state">Loading Data Cloud dashboard…</div></template>
+    <template lwc:if={error}><div class="state err">{error}</div></template>
+
+    <template lwc:if={hasData}>
+    <div class="container">
+
+      <!-- ===== Platform Overview ===== -->
+      <div class="section-title">Platform Overview</div>
+      <div class="stats-row">
+        <template for:each={data.stats} for:item="s">
+          <div key={s.label} class="stat-card">
+            <div class="stat-icon" style={s.iconStyle}>
+              <span class="dotmark" style={s.dotStyle}></span>
+            </div>
+            <div class="stat-label">{s.label}</div>
+            <div class="stat-value">{s.value}</div>
+            <div class={s.deltaClass}>{s.delta}</div>
+          </div>
+        </template>
+
+        <!-- Profile Unification (special) -->
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#FEF3C7;">
+            <span class="dotmark" style="background:#D97706;"></span>
+          </div>
+          <div class="stat-label">Profile Unification</div>
+          <div class="unification-visual">
+            <span class="source">{data.sourceProfilesText}</span>
+            <span class="arrow">→</span>
+            <span class="unified">{data.unifiedProfilesText}</span>
+          </div>
+          <div class="stat-delta up">{data.dedupPct}% deduplication</div>
+          <div class="unification-bar"><div class="fill" style={data.retainStyle}></div></div>
+        </div>
+      </div>
+
+      <!-- ===== Data & Segments ===== -->
+      <div class="section-title">Data &amp; Segments</div>
+      <div class="middle-row">
+
+        <div class="card">
+          <div class="card-title">Top Data Streams</div>
+          <div class="bar-list">
+            <template for:each={data.topStreams} for:item="b">
+              <div key={b.label} class="bar-item">
+                <span class="bar-label">{b.label}</span>
+                <div class="bar-track"><div class={b.fillClass} style={b.barStyle}></div></div>
+                <span class="bar-value">{b.valueText}</span>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Top Segments <span class="tag">audience</span></div>
+          <div class="bar-list">
+            <template for:each={data.topSegments} for:item="b">
+              <div key={b.label} class="bar-item">
+                <span class="bar-label">{b.label}</span>
+                <div class="bar-track"><div class={b.fillClass} style={b.barStyle}></div></div>
+                <span class="bar-value">{b.valueText}</span>
+              </div>
+            </template>
+          </div>
+          <div class="foot-note">Sizes derived from real unified-profile attributes.</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Activation Targets <span class="tag">modeled</span></div>
+          <div class="activation-list">
+            <template for:each={data.activations} for:item="a">
+              <div key={a.name} class="activation-item">
+                <div class="activation-dot" style={a.dotStyle}></div>
+                <span class="activation-name">{a.name}</span>
+                <span class="activation-count">{a.count}</span>
+                <span class="activation-status">✓</span>
+              </div>
+            </template>
+          </div>
+          <div class="foot-note">Addressable reach anchored to real consent; MC activation pending.</div>
+        </div>
+      </div>
+
+      <!-- ===== Engagement & Insights ===== -->
+      <div class="section-title">Engagement &amp; Insights</div>
+      <div class="bottom-row">
+
+        <div class="card">
+          <div class="card-title">Engagement by Channel <span class="tag">campaign reach</span></div>
+          <div class="channel-list">
+            <template for:each={data.channels} for:item="c">
+              <div key={c.name} class="channel-item">
+                <div class="channel-dot" style={c.dotStyle}></div>
+                <span class="channel-name">{c.name}</span>
+                <div class="channel-bar-bg"><div class="channel-bar-fill" style={c.barStyle}></div></div>
+                <span class="channel-pct">{c.pct}</span>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Business Insights</div>
+          <div class="insights-grid">
+            <template for:each={data.insights} for:item="i">
+              <div key={i.label} class="insight-item">
+                <span class="insight-label">{i.label}</span>
+                <span class="insight-value">{i.value}</span>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Calculated Insights ===== -->
+      <div class="section-title">Calculated Insights</div>
+      <div class="table-section">
+        <div class="card">
+          <div class="card-title">Active Calculated Insights</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>CI Name</th><th>Type</th><th>Last Run</th><th>Records</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <template for:each={data.calculatedInsights} for:item="ci">
+                <tr key={ci.name}>
+                  <td>{ci.name}</td>
+                  <td><span class="model-type">{ci.ciType}</span></td>
+                  <td>{ci.lastRun}</td>
+                  <td>{ci.records}</td>
+                  <td class="status-active">✓ {ci.status}</td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===== ML Models ===== -->
+      <div class="section-title">Machine Learning Models</div>
+      <div class="table-section">
+        <div class="card">
+          <div class="card-title">ML Models <span class="tag">roadmap</span></div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Model</th><th>Type</th><th>Status</th><th>Last Run</th><th>Scorable Records</th></tr>
+            </thead>
+            <tbody>
+              <template for:each={data.mlModels} for:item="m">
+                <tr key={m.name}>
+                  <td>{m.name}</td>
+                  <td><span class="model-type">{m.mlType}</span></td>
+                  <td class="status-roadmap">{m.status}</td>
+                  <td>{m.lastRun}</td>
+                  <td>{m.records}</td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+          <div class="foot-note">Einstein Studio models are on the roadmap; scorable-record counts reflect current unified volume.</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        Velo Motors PV — Data Cloud Home · Salesforce Data Cloud · Org {data.orgId}
+      </div>
+
+    </div>
+    </template>
+  </div>
+</template>

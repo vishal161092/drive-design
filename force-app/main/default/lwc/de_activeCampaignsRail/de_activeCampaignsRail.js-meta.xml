@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>DE Active Campaigns Rail</masterLabel>
+    <description>Velo Motors Partner Hub style right-rail card with Campaigns (wired to de_CampaignController.getActiveCampaigns), Collateral, and Shared Files tabs.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="maxRows" type="Integer" label="Max Campaign Rows" default="12"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

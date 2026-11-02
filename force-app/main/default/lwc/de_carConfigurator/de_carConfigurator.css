@@ -1,0 +1,309 @@
+:host {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    /* Size to the width THIS component is actually given in whatever region it's
+       dropped into (not the viewport), so it self-arranges and never spills over
+       neighbouring components. */
+    container-type: inline-size;
+}
+
+/* NOTE: every class below is deliberately prefixed `cc-`. Generic names like
+   .stage / .panel / .title collide with Salesforce platform CSS (higher specificity
+   than our synthetic-shadow-scoped rules) and leak in to break the layout. */
+
+.cc-configurator {
+    /* Stacked: the 3D car stage on TOP (full width, so the car gets the most room)
+       and the controls panel BELOW it. */
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #0b0d10;
+    color: #d8e4f0;
+    font-family: 'Inter', 'Salesforce Sans', Arial, sans-serif;
+}
+
+.cc-stage {
+    position: relative;
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
+    /* Big, full-width car view. */
+    height: 420px;
+    overflow: hidden;
+    /* fallback tone while the Velo showroom photo (set inline via stageStyle) loads */
+    background-color: #c3c8cf;
+}
+
+.cc-panel {
+    border-radius: 0px 0px 10px 10px;
+    flex: 1 1 auto;
+    padding: 10px 14px 14px;
+    background: #ffffff;
+    color: #16191d;
+    overflow-y: auto;
+    min-width: 0;
+    border-color: #bcc2cb;
+    border-style: solid;
+    border-width: thin;
+}
+
+/* Lay the controls out in a compact responsive grid so the bottom panel stays
+   short rather than one tall column. */
+.cc-panel-body {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+    column-gap: 26px;
+    row-gap: 0;
+}
+
+/* On a very narrow panel drop the stage height a little. */
+@container (max-width: 420px) {
+    .cc-stage {
+        height: 300px;
+    }
+    .cc-panel-body {
+        grid-template-columns: 1fr;
+    }
+}
+
+.cc-viewport {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    max-width: 100%;
+    touch-action: none;
+    cursor: grab;
+}
+.cc-viewport:active {
+    cursor: grabbing;
+}
+
+.cc-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: rgba(243, 245, 247, 0.82);
+    font-size: 0.8rem;
+    color: #4a5058;
+}
+
+.cc-spinner {
+    width: 26px;
+    height: 26px;
+    border: 3px solid rgba(37, 40, 157, 0.18);
+    border-top-color: #25289d;
+    border-radius: 50%;
+    animation: cc-spin 0.9s linear infinite;
+}
+@keyframes cc-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.cc-stage-toolbar {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+}
+
+/* translucent glassy pills that float over the 3D stage */
+.cc-pill {
+    background: rgba(13, 27, 46, 0.82);
+    color: #d8e4f0;
+    border: 1px solid rgba(0, 200, 184, 0.35);
+    border-radius: 999px;
+    padding: 5px 11px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+}
+.cc-pill:hover {
+    background: rgba(0, 200, 184, 0.18);
+}
+
+/* ---- panel header ---- */
+.cc-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 7px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #e2e8f0;
+}
+.cc-panel-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #16191d;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.cc-reset {
+    font-size: 0.68rem;
+    color: #25289d;
+    cursor: pointer;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+.cc-reset:hover {
+    text-decoration: underline;
+}
+
+/* ---- one control per row: label left, controls right ---- */
+.cc-cfg-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid #eef1f6;
+}
+.cc-cfg-row:last-of-type {
+    border-bottom: none;
+}
+.cc-cfg-row-top {
+    align-items: flex-start;
+}
+.cc-cfg-label {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: #5a6472;
+    min-width: 58px;
+    flex-shrink: 0;
+}
+.cc-cfg-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+/* colour swatches */
+.cc-swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    /* subtle ring on every swatch so black AND white swatches stay visible on the
+       light panel */
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.12s ease, border-color 0.12s ease;
+    flex-shrink: 0;
+}
+.cc-swatch:hover {
+    transform: scale(1.15);
+}
+.cc-swatch.cc-selected {
+    border-color: #25289d;
+}
+
+/* segmented single-select buttons (Finish / Trim) */
+.cc-seg {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    border: 1px solid #d9dff5;
+    color: #25289d;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 0.12s ease;
+}
+.cc-seg:hover {
+    border-color: #25289d;
+}
+.cc-seg.cc-seg-on {
+    border-color: #25289d;
+    color: #ffffff;
+    background: #25289d;
+}
+
+/* pill buttons (car picker chips, glass tint, camera) */
+.cc-chip,
+.cc-pill-btn {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    border: 1px solid #d9dff5;
+    color: #5a6472;
+    background: #f6f8fc;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    white-space: nowrap;
+}
+.cc-chip:hover,
+.cc-pill-btn:hover {
+    border-color: #25289d;
+    color: #25289d;
+}
+.cc-chip.cc-chip-on {
+    background: #25289d;
+    border-color: #25289d;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.cc-panel-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 26px 0;
+    color: #5a6472;
+    font-size: 0.8rem;
+}
+
+.cc-note {
+    grid-column: 1 / -1;
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: #4a4a4f;
+    background: #eef1fb;
+    border: 1px solid #d9dff5;
+    border-radius: 8px;
+    padding: 9px 11px;
+    margin: 8px 0;
+}
+
+.cc-save {
+    width: 100%;
+    margin-top: 10px;
+    background: #25289d;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.12s ease;
+}
+.cc-save:hover {
+    background: #1b1e7a;
+}
+.cc-save:disabled {
+    opacity: 0.6;
+    cursor: default;
+}

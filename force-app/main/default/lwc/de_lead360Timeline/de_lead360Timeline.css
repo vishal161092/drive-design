@@ -1,0 +1,162 @@
+/* Deep-black glass theme.
+   Structure/markup unchanged — only colours / surfaces are themed. */
+:host {
+    --surface: rgba(18, 18, 22, 0.96);
+    --surface-2: rgba(32, 32, 40, 0.96);
+    --surface-3: rgba(255, 255, 255, 0.06);
+    --line: rgba(255, 255, 255, 0.14);
+    --line-strong: rgba(255, 255, 255, 0.24);
+
+    --glass-blur: 14px;
+    --glass-tint: linear-gradient(155deg, rgba(30, 30, 37, 0.98) 0%, rgba(14, 14, 18, 0.98) 46%, rgba(8, 8, 11, 0.99) 100%);
+    --glass-sheen: rgba(255, 255, 255, 0.14);
+    --shadow-card: inset 0 1px 0 var(--glass-sheen), inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 14px 40px rgba(0, 0, 0, 0.6);
+    --radius: 14px;
+
+    --accent: #e11b22;
+    --accent-2: #ff3b41;
+    --accent-soft: rgba(225, 27, 34, 0.16);
+    --accent-line: rgba(225, 27, 34, 0.42);
+
+    --brand: var(--accent);
+    --ink: #f4f4f6;
+    --ink-2: #c7c7cf;
+    --text: #f4f4f6;
+    --muted: #8f8f9a;
+    --border: rgba(255, 255, 255, 0.14);
+    --border-light: rgba(255, 255, 255, 0.10);
+
+    display: block;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.card {
+    position: relative;
+    background: var(--glass-tint);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--line);
+    color: var(--text);
+    overflow: hidden;
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.card-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-body {
+    padding: 16px;
+}
+
+.vtl-track {
+    position: relative;
+    padding-left: 20px;
+}
+
+.vtl-track::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: var(--line);
+}
+
+.vtl-event {
+    position: relative;
+    padding: 0 0 16px 16px;
+}
+
+.vtl-event:last-child {
+    padding-bottom: 0;
+}
+
+.vtl-dot {
+    position: absolute;
+    left: -19px;
+    top: 3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--muted);
+    border: 2px solid rgba(14, 14, 18, 0.95);
+    box-shadow: 0 0 0 1px var(--line);
+}
+
+.vtl-event.whatsapp .vtl-dot { background: #25d366; }
+.vtl-event.web .vtl-dot { background: #4a90d9; }
+.vtl-event.app .vtl-dot { background: #9b59b6; }
+.vtl-event.store .vtl-dot { background: #e67e22; }
+.vtl-event.rcs .vtl-dot { background: var(--accent-2); }
+.vtl-event.sms .vtl-dot { background: #7f8c8d; }
+.vtl-event.email .vtl-dot { background: #16a085; }
+
+.vtl-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.vtl-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+}
+
+.vtl-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.vtl-date {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.vtl-channel {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 7px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.vtl-channel.whatsapp { background: rgba(37, 211, 102, 0.18); color: #4ee08a; }
+.vtl-channel.web { background: rgba(74, 144, 217, 0.18); color: #7db4ec; }
+.vtl-channel.app { background: rgba(155, 89, 182, 0.20); color: #c088e0; }
+.vtl-channel.store { background: rgba(230, 126, 34, 0.18); color: #f0a35a; }
+.vtl-channel.rcs { background: var(--accent-soft); color: var(--accent-2); }
+.vtl-channel.sms { background: rgba(255, 255, 255, 0.08); color: #aeb4b8; }
+.vtl-channel.email { background: rgba(22, 160, 133, 0.18); color: #3ecdae; }

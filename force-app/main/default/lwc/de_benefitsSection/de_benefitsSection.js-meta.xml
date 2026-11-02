@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>PH Benefits Section</masterLabel>
+    <description>Two-column benefits section (heading/description + bullet list) with a row of circular benefit icons for the Partner Hub home page.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="heading" type="String" label="Heading" default="Benefits of the Velo Motors Partner Hub"/>
+            <property name="description" type="String" label="Description" default="This is not your typical portal. It is built around what Velo Motors dealers need — with benefits to strengthen every part of your business, from marketing to the showroom floor."/>
+            <property name="benefitsList" type="String" label="Benefits List (comma or newline separated)"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

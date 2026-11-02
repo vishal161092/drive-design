@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>PH Grow CTA Banner</masterLabel>
+    <description>Full-width banner with heading, subtitle and CTA button encouraging partners to grow their business, for the Partner Hub home page.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="heading" type="String" label="Heading" default="Grow your dealership with Velo Motors."/>
+            <property name="subtitle" type="String" label="Subtitle" default="Put the Velo Motors Partner Hub to work and turn campaigns into showroom footfall."/>
+            <property name="ctaLabel" type="String" label="Button Label" default="Get Started Today"/>
+            <property name="ctaUrl" type="String" label="Button URL"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

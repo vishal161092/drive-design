@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs><linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f6f8"/><stop offset="1" stop-color="#d5dbe0"/></linearGradient>
+  <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9d0d6"/><stop offset="1" stop-color="#9aa4ac"/></linearGradient></defs>
+  <rect width="1600" height="560" fill="url(#wall)"/><rect y="560" width="1600" height="340" fill="url(#floor)"/>
+</svg>

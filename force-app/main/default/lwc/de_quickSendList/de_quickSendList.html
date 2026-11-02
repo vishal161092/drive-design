@@ -1,0 +1,67 @@
+<template>
+    <div class="cc-qsl">
+        <!-- Header -->
+        <div class="cc-qsl__header">
+            <div class="cc-qsl__header-left">
+                <p class="cc-qsl__eyebrow">Quick Send Messages</p>
+                <div class="cc-qsl__title-row" onclick={handleTitleCaretClick}>
+                    <h1 class="cc-qsl__title">All Quick Sends</h1>
+                    <lightning-icon icon-name="utility:down" size="x-small" alternative-text="Toggle"></lightning-icon>
+                </div>
+            </div>
+            <div class="cc-qsl__header-right">
+                <div class="cc-qsl__search">
+                    <lightning-icon icon-name="utility:search" size="x-small" class="cc-qsl__search-icon"></lightning-icon>
+                    <input
+                        type="search"
+                        class="cc-qsl__search-input"
+                        placeholder="Search this list..."
+                        value={searchTerm}
+                        oninput={handleSearchChange}
+                    />
+                </div>
+            </div>
+        </div>
+
+        <p class="cc-qsl__meta">{metaLine}</p>
+
+        <!-- Table card -->
+        <div class="cc-card">
+            <table class="cc-qsl__table">
+                <thead>
+                    <tr>
+                        <th scope="col">Message Name</th>
+                        <th scope="col">Quick Send Number</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Created Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={filteredRows} for:item="row">
+                        <tr key={row.id}>
+                            <td>
+                                <a
+                                    href="javascript:void(0);"
+                                    class="cc-qsl__link"
+                                    data-id={row.id}
+                                    data-name={row.name}
+                                    data-number={row.number}
+                                    data-description={row.description}
+                                    onclick={handleRowSelect}
+                                >{row.name}</a>
+                            </td>
+                            <td>{row.number}</td>
+                            <td class="cc-qsl__desc">{row.description}</td>
+                            <td>{row.createdDate}</td>
+                        </tr>
+                    </template>
+                    <template if:true={hasNoResults}>
+                        <tr>
+                            <td colspan="4" class="cc-qsl__empty">No Quick Sends match your search.</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,54 @@
+<template>
+    <div class="cc-cta">
+        <!-- LEFT: text -->
+        <div class="cc-cta__intro">
+            <h2 class="cc-cta__heading">{heading}</h2>
+            <p class="cc-cta__description">{description}</p>
+
+            <div class="cc-cta__stats">
+                <template for:each={stats} for:item="stat">
+                    <div key={stat.key} class="cc-cta__stat">
+                        <span class="cc-cta__stat-value">{stat.value}</span>
+                        <span class="cc-cta__stat-label">{stat.label}</span>
+                    </div>
+                </template>
+            </div>
+
+            <template if:true={hasCta}>
+                <a class="cc-btn cc-btn--green" href={ctaUrl}>{ctaLabel}</a>
+            </template>
+        </div>
+
+        <!-- RIGHT: model carousel -->
+        <div class="cc-cta__carousel">
+            <template for:each={slides} for:item="slide">
+                <div key={slide.id} class={slide.cssClass}>
+                    <img src={slide.image} alt={slide.name} class="cc-cta__slide-img" loading="lazy" />
+                    <div class="cc-cta__slide-caption">
+                        <span class="cc-cta__slide-badge">{slide.badge}</span>
+                        <h3 class="cc-cta__slide-title">{slide.name}</h3>
+                        <p class="cc-cta__slide-tagline">{slide.tagline}</p>
+                        <div class="cc-cta__slide-specs">
+                            <template for:each={slide.specChips} for:item="chip">
+                                <span key={chip.key} class="cc-cta__spec">{chip.text}</span>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <div class="cc-cta__dots">
+                <template for:each={dots} for:item="dot">
+                    <button
+                        key={dot.key}
+                        type="button"
+                        class={dot.cssClass}
+                        data-index={dot.index}
+                        onclick={handleDot}
+                        title="Go to slide"
+                    ></button>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

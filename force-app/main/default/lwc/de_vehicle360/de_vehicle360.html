@@ -1,0 +1,339 @@
+<template>
+  <div class="de-scope">
+
+    <!-- ===== Header + search ===== -->
+    <div class="header">
+      <div class="brand">
+        <div class="mark">T</div>
+        <div>
+          <h1>VELO MOTORS</h1>
+          <div class="tag">VEHICLE 360 · DATA CLOUD</div>
+        </div>
+        <template lwc:if={hasData}>
+          <button class="backbtn hdr-back" onclick={goBack}>← Back to fleet</button>
+        </template>
+      </div>
+      <div class="hsearch">
+        <lightning-input variant="label-hidden" type="search"
+          placeholder="Search vehicle by VIN, registration, model or owner…"
+          value={searchTerm} onchange={handleSearch} oninput={handleSearch}></lightning-input>
+        <template lwc:if={showResults}>
+          <div class="suggest show">
+            <template for:each={results} for:item="r">
+              <div key={r.vehId} class="row" data-id={r.vehId} onclick={handleSelect}>
+                <div class="n">{r.icon} {r.title}</div>
+                <div class="d">{r.detail}</div>
+              </div>
+            </template>
+          </div>
+        </template>
+      </div>
+      <div class="who">
+        <div>Vehicle master · Telematics</div>
+        <div class="live">● Data Cloud · connected vehicles</div>
+      </div>
+    </div>
+
+    <!-- ===== States ===== -->
+    <template lwc:if={loading}><div class="state">Loading vehicle profile…</div></template>
+    <template lwc:if={error}><div class="state err">{error}</div></template>
+    <template lwc:if={showEmptyText}><div class="state">Search for a vehicle to load its live Data Cloud 360.</div></template>
+    <template lwc:if={showDirectory}>
+      <div class="fleet">
+        <div class="fleet-body">
+          <!-- stats strip -->
+          <div class="stats-strip">
+            <div class="stat-card"><div class="stat-label">Total Vehicles</div><div class="stat-value teal">{totalCount}</div><div class="stat-delta">Connected fleet</div></div>
+            <div class="stat-card"><div class="stat-label">Online Now</div><div class="stat-value green">{fleet.online}</div><div class="stat-delta">{onlinePct}% fleet active</div></div>
+            <div class="stat-card"><div class="stat-label">Alerts</div><div class="stat-value amber">{fleet.alerts}</div><div class="stat-delta">Require attention</div></div>
+            <div class="stat-card"><div class="stat-label">EV Units</div><div class="stat-value teal">{fleet.evUnits}</div><div class="stat-delta">{evPct}% of fleet</div></div>
+            <div class="stat-card"><div class="stat-label">Offline</div><div class="stat-value dim">{fleet.offline}</div><div class="stat-delta">Last seen &gt;1h</div></div>
+          </div>
+
+          <!-- filter bar -->
+          <div class="filter-bar">
+            <div class="filter-chips">
+              <button class={allChipClass} data-f="all" onclick={setFilter}>All</button>
+              <button class={onlineChipClass} data-f="online" onclick={setFilter}><span class="chip-dot dot-online"></span>Online</button>
+              <button class={offlineChipClass} data-f="offline" onclick={setFilter}><span class="chip-dot dot-offline"></span>Offline</button>
+              <button class={alertChipClass} data-f="alert" onclick={setFilter}><span class="chip-dot dot-alert"></span>Alerts</button>
+              <button class={evChipClass} data-f="ev" onclick={setFilter}>EV Only</button>
+            </div>
+            <div class="filter-count">Showing <strong>{showingCount}</strong> of {totalCount} vehicles</div>
+          </div>
+
+          <!-- model groups -->
+          <div class="groups-container">
+            <template for:each={displayGroups} for:item="g">
+              <div key={g.modelKey} class={g.groupClass} style={g.accentStyle}>
+                <div class="group-header" data-key={g.modelKey} onclick={toggleGroup}>
+                  <span class="group-model-name" style={g.nameStyle}>{g.model}</span>
+                  <span class="group-count-badge">{g.count}</span>
+                  <template lwc:if={g.hasEv}><span class="group-ev-badge">{g.evLabel}</span></template>
+                  <div class="group-spacer"></div>
+                  <div class="group-chevron">▾</div>
+                </div>
+                <div class="group-body">
+                  <div class="group-body-inner">
+                    <template for:each={g.rows} for:item="r">
+                      <div key={r.vehId} class="vehicle-row" data-id={r.vehId} onclick={handleSelect}>
+                        <div class={r.dotClass}></div>
+                        <div class="row-variant">{r.variant}</div>
+                        <div class="row-plate">{r.plate}</div>
+                        <div class="row-vin">{r.vin}</div>
+                        <div class="row-customer">{r.customer}</div>
+                        <div class="row-fuel">{r.fuel}</div>
+                        <div class="row-odo">{r.odo}</div>
+                        <div class="row-year">{r.year}</div>
+                        <div class="row-dealer">{r.dealer}</div>
+                        <template lwc:if={r.isEv}><span class="ev-badge">EV</span></template>
+                        <div class="row-lastseen">{r.lastSeen}</div>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- ===== Body ===== -->
+    <template lwc:if={hasData}>
+    <div class="wrap">
+
+      <!-- ============ LEFT: identity + hero ============ -->
+      <div class="col">
+        <div class="card">
+          <div class="hero">
+            <div class="veh-stage">
+              <template lwc:if={data.isEv}><span class="pill pill-green evbadge">⚡ EV</span></template>
+              <template lwc:if={showHeroImg}>
+                <img class="carimg" src={heroImg} alt={data.title} onerror={handleImgError}>
+              </template>
+              <template lwc:else><div class="car">🚙</div></template>
+            </div>
+          </div>
+          <div class="vtitle">
+            <h2>{data.title}</h2>
+            <div class="vsub">{data.subLine}</div>
+            <template lwc:if={data.chips.length}>
+              <div class="chips">
+                <template for:each={data.chips} for:item="c">
+                  <span key={c.label} class={c.cls}>{c.label}</span>
+                </template>
+              </div>
+            </template>
+          </div>
+          <div class="spec">
+            <template for:each={data.specs} for:item="s">
+              <div key={s.k} class="s"><div class="k">{s.k}</div><div class="v">{s.v}</div></div>
+            </template>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3><span class="ic">👤</span> Owner</h3></div>
+          <div class="bd">
+            <div class="owner"><div class="av">{data.ownerInitials}</div><div><div class="oname">{data.ownerName}</div><div class="osub">{data.ownerSub}</div></div></div>
+            <template lwc:if={householdLine}><div class="faint mt8">{householdLine}</div></template>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3><span class="ic">🏢</span> Selling Dealer</h3></div>
+          <div class="bd dealer">
+            <div class="dname">{data.dealerName}</div>
+            <div class="muted">{data.dealerSub}</div>
+            <div class="mt8">
+              <template lwc:if={data.financier}><span class="pill pill-grey">Financier: {data.financier}</span></template>
+              <template lwc:if={data.emi}><span class="pill pill-grey">EMI {data.emi}</span></template>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ CENTER: health + tabs ============ -->
+      <div class="col">
+        <div class="card">
+          <div class="hd"><h3><span class="ic">🩺</span> Vehicle Health</h3><span class="pill pill-gold">{data.healthPill}</span></div>
+          <div class="bd">
+            <div class="healthrow">
+              <div class="hgauge">
+                <div class="gauge" style={gaugeStyle}><div class="in"><div class="num">{data.health}</div><div class="lbl">HEALTH</div></div></div>
+              </div>
+              <div class="statusgrid">
+                <template for:each={healthTileRows} for:item="t">
+                  <div key={t.key} class={t.cls}><div class="k">{t.k}</div><div class="v">{t.v}</div></div>
+                </template>
+              </div>
+            </div>
+            <div class="faint mt12">{data.healthNote}</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="tabs">
+            <div class={healthTabClass} data-tab="health" onclick={handleTab}>Battery &amp; Health</div>
+            <div class={svcTabClass} data-tab="svc" onclick={handleTab}>Service History</div>
+            <div class={telTabClass} data-tab="tel" onclick={handleTab}>Telematics</div>
+            <div class={ownTabClass} data-tab="own" onclick={handleTab}>Ownership</div>
+            <div class={upTabClass} data-tab="up" onclick={handleTab}>Upsell</div>
+          </div>
+          <div class="tabbody">
+
+            <!-- Battery & Health -->
+            <template lwc:if={isHealth}>
+              <div class="panel active">
+                <template lwc:if={data.showBattery}>
+                  <div class="sec-t">EV Battery (High-Voltage Pack)</div>
+                  <div class="battcard">
+                    <div class="batt">
+                      <div class="battviz"><span style={data.socStyle}></span><div class="pct">{data.soc}%</div></div>
+                      <div class="battstats">
+                        <div class="b"><div class="k">State of Charge</div><div class="v">{data.soc}%</div></div>
+                        <div class="b"><div class="k">State of Health</div><div class="v gold">{data.soh}%</div></div>
+                        <div class="b"><div class="k">Est. Range</div><div class="v">{data.range}</div></div>
+                        <div class="b"><div class="k">Charge Cycles</div><div class="v">{data.cycles}</div></div>
+                      </div>
+                    </div>
+                    <div class="faint mt12">SoC/SoH/range/cycles derived from odometer &amp; age — illustrative.</div>
+                  </div>
+                </template>
+                <div class="sec-t mt18">Diagnostic Trouble Codes</div>
+                <template lwc:if={data.dtcs.length}>
+                  <table>
+                    <thead><tr><th>Code</th><th>System</th><th>Severity</th><th>Detected</th><th>Speed</th></tr></thead>
+                    <tbody>
+                      <template for:each={data.dtcs} for:item="d">
+                        <tr key={d.code}><td><b>{d.code}</b></td><td>{d.sysName}</td><td><span class={d.sevClass}>{d.severity}</span></td><td>{d.detected}</td><td>{d.speed}</td></tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </template>
+                <template lwc:else><div class="faint">No diagnostic trouble codes on record.</div></template>
+              </div>
+            </template>
+
+            <!-- Service History -->
+            <template lwc:if={isSvc}>
+              <div class="panel active">
+                <div class="sec-t">Service History · {data.srcServices} visits</div>
+                <template lwc:if={data.services.length}>
+                  <table>
+                    <thead><tr><th>Date</th><th>Category</th><th>Type</th><th>Dealer</th><th>Odo</th><th>Amount</th><th>NPS</th></tr></thead>
+                    <tbody>
+                      <template for:each={data.services} for:item="s">
+                        <tr key={s.svcDate}><td>{s.svcDate}</td><td>{s.category}</td><td><span class={s.typeClass}>{s.svcType}</span></td><td>{s.dealer}</td><td>{s.odo}</td><td>{s.amount}</td><td>{s.nps}</td></tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </template>
+                <template lwc:else><div class="faint">No service history on record for this vehicle.</div></template>
+              </div>
+            </template>
+
+            <!-- Telematics -->
+            <template lwc:if={isTel}>
+              <div class="panel active">
+                <div class="sec-t">Telematics</div>
+                <div class="statusgrid three">
+                  <template for:each={telTileRows} for:item="t">
+                    <div key={t.key} class={t.cls}><div class="k">{t.k}</div><div class="v">{t.v}</div></div>
+                  </template>
+                </div>
+                <div class="sec-t mt18">Telematics Event Stream</div>
+                <template lwc:if={telStreamRows.length}>
+                  <div class="timeline">
+                    <template for:each={telStreamRows} for:item="t">
+                      <div key={t.key} class={t.cls}><div class="d">{t.dateLine}</div><div class="c">{t.text}</div></div>
+                    </template>
+                  </div>
+                </template>
+                <template lwc:else><div class="faint">No telematics events on record.</div></template>
+              </div>
+            </template>
+
+            <!-- Ownership -->
+            <template lwc:if={isOwn}>
+              <div class="panel active">
+                <div class="sec-t">Ownership &amp; Finance</div>
+                <div class="statusgrid">
+                  <template for:each={ownershipRows} for:item="t">
+                    <div key={t.key} class={t.cls}><div class="k">{t.k}</div><div class="v">{t.v}</div></div>
+                  </template>
+                </div>
+                <div class="sec-t mt18">Household Garage (owner {data.ownerId})</div>
+                <template lwc:if={garageRows.length}>
+                  <table>
+                    <thead><tr><th>Model</th><th>Variant</th><th>Fuel</th><th>Reg</th><th>Status</th></tr></thead>
+                    <tbody>
+                      <template for:each={garageRows} for:item="g">
+                        <tr key={g.key}><td><b>{g.modelLabel}</b></td><td>{g.variant}</td><td>{g.fuel}</td><td>{g.reg}</td><td><span class={g.statusClass}>{g.status}</span></td></tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </template>
+                <template lwc:else><div class="faint">No other vehicles in this household.</div></template>
+              </div>
+            </template>
+
+            <!-- Upsell -->
+            <template lwc:if={isUp}>
+              <div class="panel active">
+                <div class="sec-t">AI-Powered Recommendations</div>
+                <template for:each={data.recommendations} for:item="n">
+                  <div key={n.title} class="nba">
+                    <div class="t"><span>{n.title}</span><span class="cf">{n.confidence}</span></div>
+                    <div class="desc">{n.description}</div>
+                    <div class="cbar"><span style={n.barStyle}></span></div>
+                  </div>
+                </template>
+              </div>
+            </template>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ RIGHT: model context + alerts ============ -->
+      <div class="col">
+        <div class="card">
+          <div class="hd"><h3><span class="ic">📊</span> Model Context</h3></div>
+          <div class="bd standing">
+            <div><div class="faint">{data.model} — network demand</div><div class="v15">{data.modelViews} views · {data.modelBuys} buys</div></div>
+            <div><div class="faint">Test drives (model)</div><div class="v15">{data.modelTestDrives}</div></div>
+            <div><div class="faint">Finance enquiries</div><div class="v15">{data.modelFinance}</div></div>
+            <div class="faint">Model demand from CI_Model_Popularity ({data.model} row).</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3><span class="ic">🔔</span> Active Alerts</h3><span class="pill pill-gold">{alertCount}</span></div>
+          <div class="bd">
+            <template lwc:if={alertRows.length}>
+              <div class="timeline">
+                <template for:each={alertRows} for:item="a">
+                  <div key={a.key} class={a.cls}><div class="d">{a.dateLine}</div><div class="c">{a.text}</div></div>
+                </template>
+              </div>
+            </template>
+            <template lwc:else><div class="faint">No active alerts.</div></template>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3><span class="ic">🔌</span> Data Sources</h3></div>
+          <div class="bd dsrc">
+            <div>● Vehicle master · <b>{data.vehId}</b></div>
+            <div>● Telematics events · <b>{data.srcTelematics}</b></div>
+            <div>● Service Cloud · <b>{data.srcServices} visits</b></div>
+            <div>● Finance / warranty · <b>{data.financier}</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </template>
+  </div>
+</template>

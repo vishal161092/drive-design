@@ -1,0 +1,5 @@
+{
+  "title" : "Velo Car Configurator",
+  "description" : "Renders the interactive 3D Velo car configurator so the customer can personalize paint, wheels, and interior live in chat",
+  "lightning:type" : "@apexClassType/c__Velo_CarConfiguratorInfo"
+}

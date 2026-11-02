@@ -1,0 +1,99 @@
+<template>
+    <div class="tdl-root">
+        <h2 class="tdl-heading">{heading}</h2>
+
+        <template lwc:if={hasDealers}>
+            <ul class="tdl-list">
+                <template for:each={dealers} for:item="dealer">
+                    <li key={dealer.id} class={dealer.cardClass}>
+                        <div class="tdl-card-head">
+                            <span class="tdl-name">{dealer.name}</span>
+                            <template lwc:if={dealer.hasCategory}>
+                                <span class="tdl-badge">{dealer.category}</span>
+                            </template>
+                        </div>
+
+                        <p class="tdl-address">{dealer.address}</p>
+
+                        <template lwc:if={dealer.hasPhone}>
+                            <a class="tdl-phone" href={dealer.telHref}>
+                                <span class="tdl-phone-icon">&#9742;</span>
+                                <span>{dealer.phone}</span>
+                            </a>
+                        </template>
+
+                        <!-- Confirmed test drive -->
+                        <template lwc:if={dealer.confirmed}>
+                            <p class="tdl-confirm">{dealer.confirmMsg}</p>
+                            <template lwc:if={dealer.hasMapsUrl}>
+                                <button
+                                    class="tdl-maps-btn"
+                                    data-url={dealer.mapsUrl}
+                                    onclick={handleMapsClick}
+                                >Open in Google Maps</button>
+                            </template>
+                        </template>
+
+                        <!-- Not yet booked: actions only (the schedule form lives in a
+                             single full-width panel below the grid) -->
+                        <template lwc:else>
+                            <div class="tdl-actions">
+                                <template lwc:if={dealer.hasMapsUrl}>
+                                    <button
+                                        class="tdl-maps-btn"
+                                        data-url={dealer.mapsUrl}
+                                        onclick={handleMapsClick}
+                                    >Open in Google Maps</button>
+                                </template>
+                                <button
+                                    class="tdl-choose-btn"
+                                    data-id={dealer.id}
+                                    onclick={handleChoose}
+                                >Choose this dealership</button>
+                            </div>
+                        </template>
+                    </li>
+                </template>
+            </ul>
+
+            <!-- One shared, full-width scheduling panel so opening it never leaves
+                 blank space in the other grid columns. -->
+            <template lwc:if={showFormPanel}>
+                <div class="tdl-form">
+                    <p class="tdl-form-title">Schedule Your Test Drive at {activeDealerName}</p>
+                    <div class="tdl-form-fields">
+                        <label class="tdl-field">
+                            <span class="tdl-field-label">Date</span>
+                            <input
+                                type="date"
+                                class="tdl-input"
+                                min={todayStr}
+                                value={formDate}
+                                onchange={handleDateChange}
+                            />
+                        </label>
+                        <label class="tdl-field">
+                            <span class="tdl-field-label">Time</span>
+                            <select
+                                class="tdl-input"
+                                value={formTime}
+                                onchange={handleTimeChange}
+                            >
+                                <option value="">Select a time</option>
+                                <template for:each={timeOptions} for:item="slot">
+                                    <option key={slot.value} value={slot.value}>{slot.label}</option>
+                                </template>
+                            </select>
+                        </label>
+                        <button
+                            class="tdl-submit-btn"
+                            data-id={activeDealerId}
+                            onclick={handleConfirm}
+                            disabled={submitDisabled}
+                        >Confirm test drive</button>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</template>

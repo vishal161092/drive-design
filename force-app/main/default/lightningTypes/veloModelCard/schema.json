@@ -1,0 +1,5 @@
+{
+  "title" : "Velo Model Card Response",
+  "description" : "Renders a Velo model detail card with image, price, fuel options, key specs, and features",
+  "lightning:type" : "@apexClassType/c__Velo_ModelCardInfo"
+}

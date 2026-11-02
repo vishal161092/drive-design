@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>PH Marketing Hub Hero</masterLabel>
+    <description>Split hero banner (title + subtitle + photo) for the Partner Hub home page.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="title" type="String" label="Title" default="Velo Motors Partner Hub"/>
+            <property name="subtitle" type="String" label="Subtitle" default="Launch Velo Motors campaigns, track your leads and grow dealership sales across the Nova, Spark, Hawk and Savanna lineup — all from one hub."/>
+            <property name="imageUrl" type="String" label="Hero Image URL"/>
+            <property name="ctaLabel" type="String" label="Button Label"/>
+            <property name="ctaUrl" type="String" label="Button URL"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

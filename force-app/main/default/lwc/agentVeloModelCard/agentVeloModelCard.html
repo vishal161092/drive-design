@@ -1,0 +1,73 @@
+<template>
+    <div class="tmc-root">
+        <article class="tmc-container">
+            <div class="tmc-image-section">
+                <template lwc:if={showVideo}>
+                    <video
+                        class="tmc-video"
+                        src={videoUrl}
+                        autoplay
+                        controls
+                        playsinline
+                        preload="auto"
+                        onended={handleVideoEnded}
+                        onerror={handleVideoError}
+                    ></video>
+                </template>
+                <template lwc:else>
+                    <img src={heroImageUrl} alt={modelName} class="tmc-image" />
+                </template>
+            </div>
+
+            <div class="tmc-content">
+                <h2 class="tmc-model-name">{modelName}</h2>
+                <template lwc:if={tagline}>
+                    <p class="tmc-tagline">{tagline}</p>
+                </template>
+
+                <div class="tmc-price-row">
+                    <template lwc:if={priceRange}>
+                        <div class="tmc-price">
+                            <span class="tmc-price-label">Ex-showroom</span>
+                            <span class="tmc-price-value">{priceRange}</span>
+                        </div>
+                    </template>
+                    <template lwc:if={hasFuelOptions}>
+                        <div class="tmc-fuel-chips">
+                            <template for:each={fuelOptions} for:item="fuel">
+                                <span key={fuel.id} class="tmc-fuel-chip">{fuel.text}</span>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+
+                <template lwc:if={hasKeySpecs}>
+                    <div class="tmc-specs">
+                        <span class="tmc-section-label">Key Specs</span>
+                        <ul class="tmc-specs-list">
+                            <template for:each={keySpecs} for:item="spec">
+                                <li key={spec.id} class="tmc-spec-item">{spec.text}</li>
+                            </template>
+                        </ul>
+                    </div>
+                </template>
+
+                <template lwc:if={hasFeatures}>
+                    <div class="tmc-features">
+                        <span class="tmc-section-label">Highlights</span>
+                        <ul class="tmc-features-list">
+                            <template for:each={features} for:item="feature">
+                                <li key={feature.id} class="tmc-feature-item">
+                                    <span class="tmc-feature-check">&#10003;</span>
+                                    <span>{feature.text}</span>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </template>
+
+                <button class="tmc-cta" onclick={handleCtaClick}>{ctaLabel}</button>
+            </div>
+        </article>
+    </div>
+</template>

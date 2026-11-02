@@ -1,0 +1,36 @@
+<template>
+    <div class="section-header">🛠 Service History</div>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Case #</th>
+                <th>Date</th>
+                <th>Subject</th>
+                <th>Channel</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={rows} for:item="row">
+                <tr key={row.key}>
+                    <td><strong>{row.caseNo}</strong></td>
+                    <td>{row.date}</td>
+                    <td>{row.subject}</td>
+                    <td><span class={row.channelClass}>{row.channelLabel}</span></td>
+                    <td><span class={row.statusClass}>{row.statusLabel}</span></td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+
+    <div class="stats-box">
+        <div class="stats-grid">
+            <template for:each={stats} for:item="s">
+                <div class="stat-cell" key={s.key}>
+                    <div class={s.valueClass}>{s.value}</div>
+                    {s.label}
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

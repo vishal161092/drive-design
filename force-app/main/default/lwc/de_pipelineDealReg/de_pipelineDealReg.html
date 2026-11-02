@@ -1,0 +1,67 @@
+<template>
+    <div class="cc-page">
+        <div class="cc-header">
+            <h1 class="cc-header__title">Pipeline and Deal Registration</h1>
+            <p class="cc-header__desc">
+                Use this page to register a new deal, track approval status of deals you've
+                registered, and to collaborate on deals with our staff.
+            </p>
+        </div>
+
+        <div class="cc-tabs">
+            <button class={registeredTabClass} data-tab="registered" onclick={handleTabClick}>
+                Registered
+            </button>
+            <button class={approvedTabClass} data-tab="approved" onclick={handleTabClick}>
+                Approved
+            </button>
+            <button class={rejectedTabClass} data-tab="rejected" onclick={handleTabClick}>
+                Rejected
+            </button>
+        </div>
+
+        <div class="cc-actionbar">
+            <div class="cc-actionbar__links">
+                <a href="javascript:void(0);" class="cc-link">Add to Campaign</a>
+                <a href="javascript:void(0);" class="cc-link">Add to an Actionable List</a>
+                <a href="javascript:void(0);" class="cc-link">Send Distributed Message</a>
+                <a href="javascript:void(0);" class="cc-link">Send Quick Send Message</a>
+                <a href="javascript:void(0);" class="cc-link">Send Bulk Send Message</a>
+            </div>
+            <button class="cc-btn cc-btn--green cc-btn--lg">Register Deal</button>
+        </div>
+
+        <div class="cc-columns">
+            <div class="cc-card cc-columns__main">
+                <template if:true={isLoading}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </template>
+                <template if:true={error}>
+                    <div class="cc-error">Unable to load leads. Please try again later.</div>
+                </template>
+                <template if:true={showEmpty}>
+                    <div class="cc-empty">No leads to display.</div>
+                </template>
+                <template if:true={hasData}>
+                    <lightning-datatable
+                        key-field="Id"
+                        data={leads}
+                        columns={columns}
+                        hide-checkbox-column
+                    ></lightning-datatable>
+                </template>
+            </div>
+
+            <div class="cc-card cc-columns__side">
+                <p class="cc-side__label">Most Recent Activity</p>
+                <div class="cc-empty-state">
+                    <div class="cc-empty-state__illustration"></div>
+                    <p class="cc-empty-state__title">Follow the leaders!</p>
+                    <p class="cc-empty-state__subtext">
+                        Start following colleagues, groups, and records to get updates right here.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

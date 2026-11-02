@@ -1,0 +1,67 @@
+:host {
+    --cc-blue: #003d7a;
+    --cc-blue-hero: #0067b1;
+    --cc-green: #009fda;
+    --cc-banner: #0067b1;
+    --cc-text: #1a1a2e;
+    --cc-muted: #5b6472;
+    --cc-border: #e3e8ef;
+    --cc-bg-alt: #f2f6fb;
+    display: block;
+}
+
+.cc-grow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    background: var(--cc-banner);
+    color: #ffffff;
+    padding: 3.5rem 1.5rem;
+    box-sizing: border-box;
+}
+
+.cc-grow__heading {
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.85rem;
+    max-width: 40ch;
+}
+
+.cc-grow__subtitle {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    opacity: 0.95;
+    max-width: 50ch;
+    margin-bottom: 1.75rem;
+}
+
+.cc-btn {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    text-decoration: none;
+    width: fit-content;
+}
+
+.cc-btn--white {
+    background: #ffffff;
+    color: var(--cc-blue);
+}
+
+.cc-btn--white:hover {
+    filter: brightness(0.96);
+}
+
+@media (max-width: 768px) {
+    .cc-grow {
+        padding: 2.5rem 1rem;
+    }
+
+    .cc-grow__heading {
+        font-size: 1.6rem;
+    }
+}

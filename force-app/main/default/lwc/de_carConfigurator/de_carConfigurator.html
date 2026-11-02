@@ -1,0 +1,163 @@
+<template>
+    <div class="cc-configurator">
+        <div class="cc-stage" style={stageStyle}>
+            <canvas class="cc-viewport" lwc:dom="manual"></canvas>
+            <template if:true={statusMsg}>
+                <div class="cc-overlay">
+                    <div class="cc-spinner"></div>
+                    <p>{statusMsg}</p>
+                </div>
+            </template>
+            <div class="cc-stage-toolbar">
+                <button class="cc-pill" onclick={handleAutoRotate} title="Toggle rotation">
+                    <template if:true={autoRotate}>❚❚ Pause spin</template>
+                    <template if:false={autoRotate}>▶ Spin 360°</template>
+                </button>
+                <template if:true={hasLight}>
+                    <button class="cc-pill" onclick={handleLights} title="Toggle lights">{lightsLabel}</button>
+                </template>
+                <button class="cc-pill" onclick={handleResetView} title="Reset camera">⟲ View</button>
+            </div>
+        </div>
+
+        <div class="cc-panel">
+            <div class="cc-panel-head">
+                <span class="cc-panel-title">{currentName}</span>
+                <span class="cc-reset" onclick={handleResetConfig} title="Reset choices">Reset</span>
+            </div>
+
+            <template if:false={ready}>
+                <div class="cc-panel-loading">
+                    <div class="cc-spinner"></div>
+                    <p>{statusMsg}</p>
+                </div>
+            </template>
+
+            <template if:true={ready}>
+                <div class="cc-panel-body">
+                <template if:true={showPicker}>
+                    <div class="cc-cfg-row">
+                        <span class="cc-cfg-label">Car</span>
+                        <div class="cc-cfg-controls">
+                            <template for:each={carChips} for:item="c">
+                                <button key={c.id} class={c.cls} data-id={c.id} onclick={handleSelectCar}>{c.name}</button>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:false={currentCustomizable}>
+                    <p class="cc-note">This model is available in 360° view only — drag to rotate, scroll to zoom, or use the camera presets below.</p>
+                </template>
+
+                <template if:true={hasBody}>
+                    <div class="cc-cfg-row">
+                        <span class="cc-cfg-label">Paint</span>
+                        <div class="cc-cfg-controls">
+                            <template for:each={paintSwatches} for:item="s">
+                                <button key={s.hex} class={s.cls} style={s.style}
+                                        data-hex={s.hex} title={s.label} onclick={handlePaint}></button>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={hasRoof}>
+                    <div class="cc-cfg-row">
+                        <span class="cc-cfg-label">Roof</span>
+                        <div class="cc-cfg-controls">
+                            <template for:each={roofSwatches} for:item="s">
+                                <button key={s.id} class={s.cls} style={s.style}
+                                        data-id={s.id} title={s.label} onclick={handleRoof}></button>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={hasRim}>
+                    <div class="cc-cfg-row">
+                        <span class="cc-cfg-label">Wheels</span>
+                        <div class="cc-cfg-controls">
+                            <template for:each={wheelOptions} for:item="w">
+                                <button key={w.id} class={w.cls} style={w.style}
+                                        data-id={w.id} title={w.label} onclick={handleWheel}></button>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={hasCaliper}>
+                    <div class="cc-cfg-row">
+                        <span class="cc-cfg-label">Calipers</span>
+                        <div class="cc-cfg-controls">
+                            <template for:each={caliperSwatches} for:item="c">
+                                <button key={c.id} class={c.cls} style={c.style}
+                                        data-id={c.id} title={c.label} onclick={handleCaliper}></button>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={hasBody}>
+                    <div class="cc-cfg-row">
+                        <span class="cc-cfg-label">Finish</span>
+                        <div class="cc-cfg-controls">
+                            <template for:each={finishOptions} for:item="f">
+                                <button key={f.id} class={f.cls} data-id={f.id} onclick={handleFinishSel}>{f.label}</button>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={hasTrim}>
+                    <div class="cc-cfg-row">
+                        <span class="cc-cfg-label">Trim</span>
+                        <div class="cc-cfg-controls">
+                            <template for:each={trimOptions} for:item="t">
+                                <button key={t.id} class={t.cls} data-id={t.id} onclick={handleTrimSel}>{t.label}</button>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={hasGlass}>
+                    <div class="cc-cfg-row">
+                        <span class="cc-cfg-label">Glass tint</span>
+                        <div class="cc-cfg-controls">
+                            <template for:each={tintOptions} for:item="t">
+                                <button key={t.id} class={t.cls} data-id={t.id} onclick={handleTint}>{t.label}</button>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={hasInterior}>
+                    <div class="cc-cfg-row">
+                        <span class="cc-cfg-label">Leather</span>
+                        <div class="cc-cfg-controls">
+                            <template for:each={interiorSwatches} for:item="s">
+                                <button key={s.hex} class={s.cls} style={s.style}
+                                        data-hex={s.hex} title={s.label} onclick={handleInterior}></button>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <div class="cc-cfg-row cc-cfg-row-top">
+                    <span class="cc-cfg-label">Camera</span>
+                    <div class="cc-cfg-controls">
+                        <template for:each={views} for:item="v">
+                            <button key={v.view} class="cc-pill-btn" data-view={v.view} onclick={handleView}>{v.label}</button>
+                        </template>
+                    </div>
+                </div>
+                </div>
+
+                <button class="cc-save" onclick={handleSave} disabled={saving}>
+                    <template if:true={saving}>Saving…</template>
+                    <template if:false={saving}>Save and Shop for Accessories</template>
+                </button>
+            </template>
+        </div>
+    </div>
+</template>

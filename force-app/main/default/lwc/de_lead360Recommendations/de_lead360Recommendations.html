@@ -1,0 +1,23 @@
+<template>
+    <div class="card">
+        <div class="card-header">✨ AI Recommendations</div>
+        <div class="card-body">
+            <div class="rec-grid">
+                <template for:each={recs} for:item="r">
+                    <div class={r.cardClass} key={r.key}>
+                        <div class={r.badgeClass}>{r.badge}</div>
+                        <div class="rec-title">{r.title}</div>
+                        <div class="rec-detail">{r.detail}</div>
+                        <div class="rec-score-row">
+                            <div class="rec-bar">
+                                <div class={r.barClass} style={r.barStyle}></div>
+                            </div>
+                            <span class="rec-score">{r.score}</span>
+                        </div>
+                        <button class="rec-cta">{r.cta}</button>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

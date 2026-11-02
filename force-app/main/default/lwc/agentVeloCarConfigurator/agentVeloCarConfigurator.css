@@ -1,0 +1,35 @@
+:host {
+    display: block;
+    /* no max-width / overflow clip — let .atc-wrap break out to full width */
+}
+
+.atc-wrap {
+    /* Break out of the chat bubble's padding just enough to look wide, WITHOUT
+       using 100vw — the chat is a floating panel, not the full viewport, so 100vw
+       spilled off the left edge. A small symmetric negative margin keeps it inside
+       the panel while cancelling the bubble padding. */
+    width: calc(100% + 20px);
+    max-width: calc(100% + 20px);
+    margin-left: -10px;
+    margin-right: -10px;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+
+.atc-head {
+    padding: 2px 2px 8px;
+}
+
+.atc-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #16191d;
+    margin: 0 0 2px;
+}
+
+.atc-sub {
+    font-size: 0.76rem;
+    line-height: 1.3;
+    color: #5c6670;
+    margin: 0;
+}

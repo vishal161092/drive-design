@@ -1,0 +1,81 @@
+<template>
+    <div class="cc-page">
+        <div class="cc-header">
+            <h1 class="cc-header__title">Your Customers and Contacts</h1>
+        </div>
+
+        <div class="cc-tabs">
+            <button class={contactsTabClass} data-tab="contacts" onclick={handleTabClick}>
+                Contacts
+            </button>
+            <button class={leadsTabClass} data-tab="leads" onclick={handleTabClick}>
+                Leads
+            </button>
+            <button class={accountsTabClass} data-tab="accounts" onclick={handleTabClick}>
+                Accounts
+            </button>
+        </div>
+
+        <div class="cc-card cc-table-card">
+            <template if:true={isContacts}>
+                <template if:true={contactsLoading}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </template>
+                <template if:true={contactsError}>
+                    <div class="cc-error">Unable to load contacts. Please try again later.</div>
+                </template>
+                <template if:true={showContactsEmpty}>
+                    <div class="cc-empty">No contacts to display.</div>
+                </template>
+                <template if:true={hasContacts}>
+                    <lightning-datatable
+                        key-field="Id"
+                        data={contacts}
+                        columns={contactColumns}
+                        hide-checkbox-column
+                    ></lightning-datatable>
+                </template>
+            </template>
+
+            <template if:true={isLeads}>
+                <template if:true={leadsLoading}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </template>
+                <template if:true={leadsError}>
+                    <div class="cc-error">Unable to load leads. Please try again later.</div>
+                </template>
+                <template if:true={showLeadsEmpty}>
+                    <div class="cc-empty">No leads to display.</div>
+                </template>
+                <template if:true={hasLeads}>
+                    <lightning-datatable
+                        key-field="Id"
+                        data={leads}
+                        columns={leadColumns}
+                        hide-checkbox-column
+                    ></lightning-datatable>
+                </template>
+            </template>
+
+            <template if:true={isAccounts}>
+                <template if:true={accountsLoading}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </template>
+                <template if:true={accountsError}>
+                    <div class="cc-error">Unable to load accounts. Please try again later.</div>
+                </template>
+                <template if:true={showAccountsEmpty}>
+                    <div class="cc-empty">No accounts to display.</div>
+                </template>
+                <template if:true={hasAccounts}>
+                    <lightning-datatable
+                        key-field="Id"
+                        data={accounts}
+                        columns={accountColumns}
+                        hide-checkbox-column
+                    ></lightning-datatable>
+                </template>
+            </template>
+        </div>
+    </div>
+</template>

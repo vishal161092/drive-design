@@ -1,0 +1,153 @@
+<template>
+    <div class="cc-page">
+        <template if:true={showPlaceholder}>
+            <div class="cc-note">
+                <lightning-icon icon-name="utility:info" size="x-small" class="cc-note-icon"></lightning-icon>
+                <span>Open a campaign to see details. Showing sample data below.</span>
+            </div>
+        </template>
+        <template if:true={showLoadError}>
+            <div class="cc-note cc-note--error">
+                <lightning-icon icon-name="utility:warning" size="x-small" class="cc-note-icon"></lightning-icon>
+                <span>{campaignError} Showing sample data below.</span>
+            </div>
+        </template>
+
+        <div class="cc-grid">
+            <!-- LEFT COLUMN -->
+            <div class="cc-col cc-col--left">
+                <div class="cc-card cc-header-card">
+                    <div class="cc-header-row">
+                        <div class="cc-header-main">
+                            <lightning-icon icon-name="standard:campaign" size="medium" class="cc-header-icon"></lightning-icon>
+                            <div class="cc-header-text">
+                                <p class="cc-eyebrow">Campaign</p>
+                                <h1 class="cc-title">{campaignName}</h1>
+                            </div>
+                        </div>
+                        <div class="cc-header-actions">
+                            <a href="#" class="cc-action-link" onclick={stopNav}>+ Follow</a>
+                            <a href="#" class="cc-action-link" onclick={stopNav}>Edit</a>
+                            <a href="#" class="cc-action-link" onclick={stopNav}>Delete</a>
+                            <a href="#" class="cc-action-link" onclick={stopNav}>Clone</a>
+                        </div>
+                    </div>
+
+                    <div class="cc-highlights">
+                        <div class="cc-highlight">
+                            <p class="cc-highlight-label">Type</p>
+                            <p class="cc-highlight-value">{campaignType}</p>
+                        </div>
+                        <div class="cc-highlight">
+                            <p class="cc-highlight-label">Status</p>
+                            <p class="cc-highlight-value">{campaignStatus}</p>
+                        </div>
+                        <div class="cc-highlight">
+                            <p class="cc-highlight-label">Start Date</p>
+                            <p class="cc-highlight-value">{campaignStartDate}</p>
+                        </div>
+                        <div class="cc-highlight">
+                            <p class="cc-highlight-label">End Date</p>
+                            <p class="cc-highlight-value">{campaignEndDate}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cc-card">
+                    <div class="cc-card-header">
+                        <h2 class="cc-card-title">Campaign Members (6+)</h2>
+                        <div class="cc-card-actions">
+                            <button class="cc-btn-outline" type="button">Add Leads and Referrals</button>
+                            <button class="cc-btn-outline" type="button">
+                                Add Contacts <span class="cc-caret">▾</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <table class="cc-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Name</th>
+                                <th>Title</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={displayMembers} for:item="mem">
+                                <tr key={mem.Id}>
+                                    <td>{mem.Type}</td>
+                                    <td>{mem.Status}</td>
+                                    <td><a href="#" class="cc-link" onclick={stopNav}>{mem.Name}</a></td>
+                                    <td>{mem.Title}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+
+                    <div class="cc-view-all">
+                        <a href="#" class="cc-link" onclick={stopNav}>View All</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="cc-col cc-col--right">
+                <div class="cc-card">
+                    <div class="cc-card-header">
+                        <h2 class="cc-card-title">Campaign Messages</h2>
+                        <lightning-button-icon
+                            icon-name="utility:settings"
+                            variant="bare"
+                            size="small"
+                            alternative-text="Settings"
+                            class="cc-gear"
+                        ></lightning-button-icon>
+                    </div>
+
+                    <p class="cc-section-label">Campaign Send Statistics</p>
+                    <div class="cc-stats-row">
+                        <div class="cc-stat">
+                            <p class="cc-stat-value">{sendStats.submitted}</p>
+                            <p class="cc-stat-label">Submitted</p>
+                        </div>
+                        <div class="cc-stat">
+                            <p class="cc-stat-value">{sendStats.failed}</p>
+                            <p class="cc-stat-label">Failed</p>
+                        </div>
+                        <div class="cc-stat">
+                            <p class="cc-stat-value">{sendStats.rejected}</p>
+                            <p class="cc-stat-label">Rejected</p>
+                        </div>
+                        <div class="cc-stat">
+                            <p class="cc-stat-value">{sendStats.waiting}</p>
+                            <p class="cc-stat-label">Waiting</p>
+                        </div>
+                    </div>
+
+                    <table class="cc-table cc-table--messages">
+                        <thead>
+                            <tr>
+                                <th>Message</th>
+                                <th>Channel</th>
+                                <th>Preview</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={messages} for:item="msg">
+                                <tr key={msg.Id}>
+                                    <td>{msg.name}</td>
+                                    <td>{msg.channel}</td>
+                                    <td class="cc-preview-cell">
+                                        <span class="cc-preview-text">{msg.preview}</span>
+                                        <lightning-icon icon-name="utility:preview" size="x-small" class="cc-preview-icon"></lightning-icon>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

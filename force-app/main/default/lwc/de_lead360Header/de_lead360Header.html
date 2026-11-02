@@ -1,0 +1,18 @@
+<template>
+    <div class="card profile-card">
+        <div class="profile-header">
+            <div class="profile-avatar">{initials}</div>
+            <div class="profile-name">{name}</div>
+            <div class="profile-id">{idLine}</div>
+            <div class="loyalty-badge">{loyalty}</div>
+        </div>
+        <div class="profile-details">
+            <template for:each={details} for:item="row">
+                <div class="detail-row" key={row.label}>
+                    <span class="detail-label">{row.label}</span>
+                    <span class="detail-value">{row.value}</span>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

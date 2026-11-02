@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" width="900" height="420" role="img" aria-label="Nova placeholder">
+  <!-- Generic placeholder artwork. Replace with your own licensed imagery. -->
+  <ellipse cx="450" cy="352" rx="330" ry="22" fill="#000" opacity="0.12"/>
+  <path d="M110 300 L140 235 Q160 205 205 200 L330 190 Q380 120 450 112 L600 112 Q665 118 700 185 L770 205 Q805 215 810 255 L815 300 Z" fill="#3B8BEB"/>
+  <path d="M355 190 Q395 138 450 132 L595 132 Q640 138 668 190 Z" fill="#dfe9ef" opacity="0.9"/>
+  <circle cx="260" cy="305" r="52" fill="#222"/><circle cx="260" cy="305" r="26" fill="#aab3b9"/>
+  <circle cx="665" cy="305" r="52" fill="#222"/><circle cx="665" cy="305" r="26" fill="#aab3b9"/>
+  <text x="450" y="395" font-family="Arial, Helvetica, sans-serif" font-size="30" text-anchor="middle" fill="#445">Velo Nova</text>
+</svg>

@@ -1,0 +1,39 @@
+<template>
+    <div class="tmcmp-root">
+        <h2 class="tmcmp-heading">{heading}</h2>
+
+        <div class="tmcmp-scroll">
+            <table class="tmcmp-table">
+                <thead>
+                    <tr>
+                        <th class="tmcmp-corner"></th>
+                        <template for:each={models} for:item="m">
+                            <th key={m.id} class="tmcmp-model-head">
+                                <div class="tmcmp-model-imgwrap">
+                                    <img src={m.imageUrl} alt={m.name} class="tmcmp-model-img" />
+                                </div>
+                                <div class="tmcmp-model-name">{m.name}</div>
+                                <div class="tmcmp-model-price">{m.price}</div>
+                                <button
+                                    class="tmcmp-cta"
+                                    data-name={m.name}
+                                    onclick={handleExplore}
+                                >Explore</button>
+                            </th>
+                        </template>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={rows} for:item="row">
+                        <tr key={row.id} class="tmcmp-row">
+                            <th class="tmcmp-row-label">{row.label}</th>
+                            <template for:each={row.values} for:item="cell">
+                                <td key={cell.id} class="tmcmp-cell">{cell.text}</td>
+                            </template>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>

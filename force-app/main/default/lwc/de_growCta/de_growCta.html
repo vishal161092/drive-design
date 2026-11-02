@@ -1,0 +1,9 @@
+<template>
+    <div class="cc-grow">
+        <h2 class="cc-grow__heading">{heading}</h2>
+        <p class="cc-grow__subtitle">{subtitle}</p>
+        <template if:true={hasCta}>
+            <a class="cc-btn cc-btn--white" href={ctaUrl}>{ctaLabel}</a>
+        </template>
+    </div>
+</template>

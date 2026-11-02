@@ -1,0 +1,5 @@
+{
+  "title" : "Velo Dealer List Response",
+  "description" : "Renders a list of nearby Velo dealers with address, phone, and Google Maps links",
+  "lightning:type" : "@apexClassType/c__Velo_DealerListInfo"
+}

@@ -1,0 +1,248 @@
+.tdl-root {
+    padding: 0.25rem;
+    padding-top: 20px;
+    container-type: inline-size;
+}
+
+.tdl-heading {
+    margin: 0 0 0.75rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #25289d;
+    line-height: 1.3;
+}
+
+/* 3 cards per row; wraps to a 3xN grid when there are more. */
+.tdl-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    align-items: start;
+}
+@container (max-width: 440px) {
+    .tdl-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@container (max-width: 300px) {
+    .tdl-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+.tdl-card {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.85rem;
+    background: #ffffff;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.tdl-card-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tdl-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.tdl-badge {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #25289d;
+    background: #eef1fb;
+    border: 1px solid #d9dff5;
+    border-radius: 1rem;
+    padding: 0.2rem 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.tdl-address {
+    margin: 0.5rem 0 0;
+    font-size: 0.82rem;
+    color: #4a4a4f;
+    line-height: 1.45;
+    flex: 1 1 auto;
+}
+
+.tdl-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #25289d;
+    text-decoration: none;
+}
+
+.tdl-phone:hover {
+    text-decoration: underline;
+}
+
+.tdl-phone-icon {
+    font-size: 0.9rem;
+}
+
+.tdl-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+}
+
+.tdl-maps-btn {
+    display: block;
+    margin-top: 0.85rem;
+    width: 100%;
+    border: 1.5px solid #25289d;
+    border-radius: 0.5rem;
+    background: #ffffff;
+    color: #25289d;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 0.55rem 1rem;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    text-align: center;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* inside the actions column the maps button loses its stand-alone top margin */
+.tdl-actions .tdl-maps-btn {
+    margin-top: 0;
+}
+
+.tdl-maps-btn:hover {
+    background: #25289d;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(37, 40, 157, 0.2);
+}
+
+.tdl-choose-btn {
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 0.5rem;
+    background: #25289d;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 0.55rem 1rem;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    text-align: center;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tdl-choose-btn:hover {
+    background: #1b1e7a;
+    box-shadow: 0 4px 12px rgba(37, 40, 157, 0.25);
+}
+
+/* Highlight the dealership whose schedule panel is open below the grid. */
+.tdl-card-selected {
+    border-color: #25289d;
+    box-shadow: 0 0 0 1px #25289d, 0 4px 14px rgba(37, 40, 157, 0.16);
+}
+
+/* Full-width date / time panel below the grid (shared, single instance). */
+.tdl-form {
+    margin-top: 1rem;
+    padding: 0.9rem 1rem;
+    background: #f6f8fc;
+    border: 1px solid #d9dff5;
+    border-radius: 0.7rem;
+}
+
+.tdl-form-title {
+    margin: 0 0 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #25289d;
+}
+
+/* Lay date, time and confirm across the full width; wrap on narrow panels. */
+.tdl-form-fields {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0.75rem;
+}
+
+.tdl-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex: 1 1 180px;
+    min-width: 150px;
+}
+
+.tdl-field-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #5a6472;
+}
+
+.tdl-input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d9dff5;
+    border-radius: 0.4rem;
+    background: #ffffff;
+    color: #1a1a1a;
+    font-size: 0.82rem;
+    padding: 0.45rem 0.55rem;
+}
+
+.tdl-input:focus {
+    outline: none;
+    border-color: #25289d;
+}
+
+.tdl-submit-btn {
+    flex: 0 0 auto;
+    border: none;
+    border-radius: 0.5rem;
+    background: #25289d;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 0.6rem 1.4rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    white-space: nowrap;
+}
+
+.tdl-submit-btn:hover:not(:disabled) {
+    background: #1b1e7a;
+}
+
+.tdl-submit-btn:disabled {
+    background: #c7cbe8;
+    cursor: not-allowed;
+}
+
+.tdl-confirm {
+    margin: 0.85rem 0 0;
+    padding: 0.65rem 0.75rem;
+    background: #e9f7f0;
+    border: 1px solid #b8e6d2;
+    border-radius: 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #1a7f5a;
+    line-height: 1.45;
+}

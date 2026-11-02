@@ -1,0 +1,33 @@
+<template>
+    <div class="tbo-root">
+        <div class="tbo-header">
+            <h2 class="tbo-heading">{heading}</h2>
+            <template lwc:if={prompt}>
+                <p class="tbo-prompt">{prompt}</p>
+            </template>
+        </div>
+
+        <template lwc:if={hasOptions}>
+            <div class="tbo-options">
+                <template for:each={options} for:item="option">
+                    <button
+                        key={option.id}
+                        class={option.cssClass}
+                        data-value={option.value}
+                        onclick={handleOptionClick}
+                    >
+                        <template lwc:if={option.hasSwatch}>
+                            <span class="tbo-swatch" style={option.swatchStyle}></span>
+                        </template>
+                        <span class="tbo-option-text">
+                            <span class="tbo-option-label">{option.label}</span>
+                            <template lwc:if={option.description}>
+                                <span class="tbo-option-desc">{option.description}</span>
+                            </template>
+                        </span>
+                    </button>
+                </template>
+            </div>
+        </template>
+    </div>
+</template>

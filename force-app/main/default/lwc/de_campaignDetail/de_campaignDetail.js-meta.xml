@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>DE Campaign Detail</masterLabel>
+    <description>Velo Motors Partner Hub style Campaign record detail: header, highlights, Campaign Members, and Campaign Messages panel. Wired to de_CampaignController Apex; falls back to sample data when no recordId is present.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+</LightningComponentBundle>

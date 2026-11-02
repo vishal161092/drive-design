@@ -1,0 +1,58 @@
+<template>
+    <div class="cc-benefits">
+        <div class="cc-benefits__columns">
+            <div class="cc-benefits__col cc-benefits__col--left">
+                <div class="cc-benefits__hero">
+                    <template lwc:if={hasVideo}>
+                    <iframe
+                        class="cc-benefits__video"
+                        src={videoUrl}
+                        title="Velo Motors"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen
+                    ></iframe>
+                    </template>
+                </div>
+            </div>
+            <div class="cc-benefits__col cc-benefits__col--right">
+                <h2 class="cc-benefits__heading">{heading}</h2>
+                <p class="cc-benefits__description">{description}</p>
+                <ul class="cc-benefits__list">
+                    <template for:each={benefits} for:item="benefit">
+                        <li key={benefit.key} class="cc-benefits__list-item">
+                            <svg class="cc-benefits__check" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                                <circle cx="12" cy="12" r="11" fill="currentColor" />
+                                <path fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M7 12.5l3.2 3.2L17 8.8" />
+                            </svg>
+                            <span>{benefit.text}</span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cc-benefits__range">
+            <p class="cc-benefits__range-eyebrow">The Velo lineup</p>
+            <h3 class="cc-benefits__range-title">Explore our range</h3>
+        </div>
+        <div class="cc-benefits__models">
+            <template for:each={models} for:item="model">
+                <div key={model.key} class="cc-benefits__model">
+                    <div class="cc-benefits__model-cover">
+                        <img src={model.image} alt={model.label} class="cc-benefits__model-img" loading="lazy" />
+                    </div>
+                    <div class="cc-benefits__model-meta">
+                        <div class="cc-benefits__model-text">
+                            <span class="cc-benefits__model-label">{model.label}</span>
+                            <span class="cc-benefits__model-tagline">{model.tagline}</span>
+                        </div>
+                        <svg class="cc-benefits__model-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6" />
+                        </svg>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

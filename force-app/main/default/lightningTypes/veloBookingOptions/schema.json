@@ -1,0 +1,5 @@
+{
+  "title" : "Velo Booking Options Response",
+  "description" : "Renders a set of selectable Velo booking options (variants, colours, or accessories) as clickable cards",
+  "lightning:type" : "@apexClassType/c__Velo_BookingOptionsInfo"
+}

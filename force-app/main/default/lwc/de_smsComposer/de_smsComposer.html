@@ -1,0 +1,46 @@
+<template>
+    <div class="cc-sms">
+        <div class="cc-sms__columns">
+            <!-- LEFT: editor -->
+            <div class="cc-sms__col">
+                <div class="cc-card">
+                    <div class="cc-card__header">
+                        <h2 class="cc-card__title">SMS Message</h2>
+                    </div>
+                    <div class="cc-card__body">
+                        <textarea
+                            class="cc-sms__textarea"
+                            value={message}
+                            maxlength={maxLength}
+                            oninput={handleMessageChange}
+                            placeholder="Type your SMS message here..."
+                        ></textarea>
+                        <p class="cc-sms__helper">{remainingLabel}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: preview -->
+            <div class="cc-sms__col">
+                <div class="cc-card">
+                    <div class="cc-card__header">
+                        <h2 class="cc-card__title">Preview</h2>
+                    </div>
+                    <div class="cc-card__body">
+                        <div class="cc-sms__phone">
+                            <div class="cc-sms__bubble">
+                                <p class={previewClass}>{previewText}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cc-sms__footer">
+            <button class="cc-btn cc-btn--gray" onclick={handleCancel}>Cancel</button>
+            <button class="cc-btn cc-btn--blue" onclick={handleSaveAndClose}>Save &amp; Close</button>
+            <button class="cc-btn cc-btn--send" onclick={handleSend}>Send Message</button>
+        </div>
+    </div>
+</template>

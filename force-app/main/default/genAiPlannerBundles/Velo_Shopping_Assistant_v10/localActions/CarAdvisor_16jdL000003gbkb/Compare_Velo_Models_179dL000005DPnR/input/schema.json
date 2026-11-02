@@ -1,0 +1,14 @@
+{
+  "required" : [ ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "modelsCsv" : {
+      "title" : "Models CSV",
+      "description" : "Comma-separated Velo model keys to compare, e.g. nova,hawk,spark (supported: nova, hawk, spark, crest, nova_ev, summit).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

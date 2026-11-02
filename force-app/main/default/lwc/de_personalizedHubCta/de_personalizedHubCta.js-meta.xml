@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>PH Personalized Hub CTA</masterLabel>
+    <description>Centered marketing hub call-to-action section with heading, description and CTA button for the Partner Hub home page.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="heading" type="String" label="Heading" default="Your Velo Motors Dealer Marketing Hub"/>
+            <property name="description" type="String" label="Description" default="Welcome, Velo Motors dealer partner. Your marketing hub brings co-branded campaign kits, product launch materials and smart outreach tools together in one place — so you can promote the Velo Motors lineup and connect with buyers more professionally."/>
+            <property name="ctaLabel" type="String" label="Button Label" default="Browse Campaign Content"/>
+            <property name="ctaUrl" type="String" label="Button URL"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

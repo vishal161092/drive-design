@@ -1,0 +1,22 @@
+<template>
+    <div class="cc-qsw">
+        <!-- Default: list of quick sends -->
+        <template if:true={showList}>
+            <c-de_quick-send-list onselect={handleSelect}></c-de_quick-send-list>
+        </template>
+
+        <!-- Selected: Free Form - SMS compose screen -->
+        <template if:true={showCompose}>
+            <div class="cc-qsw__back-row">
+                <button type="button" class="cc-qsw__back" onclick={handleBack}>
+                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                        <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M15 5 8 12l7 7" />
+                    </svg>
+                    {backLabel}
+                </button>
+            </div>
+            <c-de_quick-send-message record-title={selectedName}></c-de_quick-send-message>
+            <c-de_sms-composer recipient-name={selectedName}></c-de_sms-composer>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,248 @@
+<template>
+    <div class="ad-dashboard">
+        <!-- 1. Dark header bar -->
+        <div class="ad-header">
+            <span class="ad-header__title">Marketing Performance</span>
+            <span class="ad-header__pill">{dateRangeLabel}</span>
+        </div>
+
+        <!-- 2. Blue hero band -->
+        <div class="ad-hero">
+            <span class="ad-hero__eyebrow">Velo Motors · Dealer Analytics</span>
+            <h1 class="ad-hero__title">Velo Motors Marketing Performance</h1>
+            <p class="ad-hero__subtitle">Campaign performance across your dealership's models and segments, tied to leads and sales.</p>
+        </div>
+
+        <!-- 3. Data source tabs -->
+        <div class="ad-tabs">
+            <template for:each={dataSourceTabs} for:item="tab">
+                <div class="ad-tab" key={tab.key}>
+                    <span class="ad-tab__name">{tab.name}</span>
+                    <span class="ad-tab__updated">{tab.updated}</span>
+                </div>
+            </template>
+        </div>
+
+        <!-- 4. KPI donut cards -->
+        <div class="ad-kpis">
+            <template for:each={kpiCards} for:item="kpi">
+                <div class="ad-kpi-card" key={kpi.key}>
+                    <div class="ad-kpi-card__donut-wrap">
+                        <svg class="ad-donut" viewBox="0 0 100 100">
+                            <circle class="ad-donut__track" cx="50" cy="50" r="42"></circle>
+                            <circle
+                                class="ad-donut__progress"
+                                cx="50"
+                                cy="50"
+                                r="42"
+                                style={kpi.progressStyle}
+                                stroke-dasharray={kpi.dashArray}
+                                transform="rotate(-90 50 50)"
+                            ></circle>
+                        </svg>
+                        <div class="ad-kpi-card__value">{kpi.value}</div>
+                    </div>
+                    <div class="ad-kpi-card__caption">{kpi.caption}</div>
+                    <div class={kpi.statusClass}>{kpi.status}</div>
+                    <div class="ad-kpi-card__helper">
+                        {kpi.helper}
+                        <span class={kpi.deltaClass}>{kpi.delta}</span>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- 5. Flat metric tiles -->
+        <div class="ad-tiles">
+            <template for:each={metricTiles} for:item="tile">
+                <div class="ad-tile" key={tile.key}>
+                    <div class="ad-tile__value">{tile.value}</div>
+                    <div class="ad-tile__label">{tile.label}</div>
+                    <div class={tile.deltaClass}>{tile.delta}</div>
+                </div>
+            </template>
+        </div>
+
+        <!-- 6. Trend + sales row -->
+        <div class="ad-charts">
+            <div class="ad-chart-card">
+                <h2 class="ad-chart-card__title">Leads — 12-Month Trend</h2>
+                <svg class="ad-trend" viewBox={leadsTrend.viewBox}>
+                    <template for:each={leadsTrend.grid} for:item="g">
+                        <line key={g.key} class="ad-trend__grid" x1={leadsTrend.baseX0} y1={g.y} x2={leadsTrend.baseX1} y2={g.y}></line>
+                    </template>
+                    <polygon class="ad-trend__area" points={leadsTrend.area}></polygon>
+                    <polyline class="ad-trend__line" points={leadsTrend.line}></polyline>
+                    <template for:each={leadsTrend.dots} for:item="d">
+                        <circle key={d.key} class="ad-trend__dot" cx={d.cx} cy={d.cy} r="3"></circle>
+                    </template>
+                    <template for:each={leadsTrend.labels} for:item="lbl">
+                        <text key={lbl.key} class="ad-trend__label" x={lbl.x} y="160" text-anchor="middle">{lbl.label}</text>
+                    </template>
+                </svg>
+            </div>
+
+            <div class="ad-chart-card">
+                <h2 class="ad-chart-card__title">Attributed Sales by Quarter</h2>
+                <div class="ad-columns">
+                    <template for:each={salesColumns} for:item="col">
+                        <div class="ad-column" key={col.key}>
+                            <span class="ad-column__value">{col.display}</span>
+                            <div class="ad-column__bar-wrap">
+                                <div class="ad-column__bar" style={col.barStyle}></div>
+                            </div>
+                            <span class="ad-column__label">{col.label}</span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. Model leads + powertrain row -->
+        <div class="ad-charts">
+            <div class="ad-chart-card">
+                <h2 class="ad-chart-card__title">Leads by Model</h2>
+                <div class="ad-modelbars">
+                    <template for:each={modelBars} for:item="m">
+                        <div class="ad-modelbar" key={m.key}>
+                            <span class="ad-modelbar__label">{m.label}</span>
+                            <div class="ad-modelbar__track">
+                                <div class="ad-modelbar__fill" style={m.barStyle}></div>
+                            </div>
+                            <span class="ad-modelbar__value">{m.value}</span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <div class="ad-chart-card">
+                <h2 class="ad-chart-card__title">Powertrain Mix</h2>
+                <div class="ad-device-row">
+                    <div class="ad-device-donut-wrap">
+                        <svg class="ad-donut ad-donut--device" viewBox="0 0 100 100">
+                            <circle class="ad-donut__track" cx="50" cy="50" r="42"></circle>
+                            <template for:each={powertrainSegments} for:item="seg">
+                                <circle
+                                    key={seg.key}
+                                    class="ad-donut__progress"
+                                    cx="50"
+                                    cy="50"
+                                    r="42"
+                                    style={seg.strokeStyle}
+                                    stroke-dasharray={seg.dashArray}
+                                    stroke-dashoffset={seg.dashOffset}
+                                    transform="rotate(-90 50 50)"
+                                ></circle>
+                            </template>
+                        </svg>
+                    </div>
+                    <ul class="ad-device-legend">
+                        <template for:each={powertrainSegments} for:item="seg">
+                            <li class="ad-legend-item" key={seg.key}>
+                                <span class="ad-legend-swatch" style={seg.swatchStyle}></span>
+                                <span class="ad-legend-label">{seg.label}</span>
+                                <span class="ad-legend-value">{seg.displayPercent}</span>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Marketing funnel -->
+        <div class="ad-funnel-card">
+            <h2 class="ad-chart-card__title">Marketing Funnel — Impression to Sale</h2>
+            <div class="ad-funnel">
+                <template for:each={funnelStages} for:item="stage">
+                    <div class="ad-funnel__row" key={stage.key}>
+                        <span class="ad-funnel__label">{stage.label}</span>
+                        <div class="ad-funnel__bar-wrap">
+                            <div class="ad-funnel__bar" style={stage.barStyle}>
+                                <span class="ad-funnel__value">{stage.value}</span>
+                            </div>
+                        </div>
+                        <span class="ad-funnel__conv">{stage.conv}</span>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- 9. Device + email clients row -->
+        <div class="ad-charts">
+            <div class="ad-chart-card">
+                <h2 class="ad-chart-card__title">Device Split</h2>
+                <div class="ad-device-row">
+                    <div class="ad-device-donut-wrap">
+                        <svg class="ad-donut ad-donut--device" viewBox="0 0 100 100">
+                            <circle class="ad-donut__track" cx="50" cy="50" r="42"></circle>
+                            <template for:each={deviceSegments} for:item="seg">
+                                <circle
+                                    key={seg.key}
+                                    class="ad-donut__progress"
+                                    cx="50"
+                                    cy="50"
+                                    r="42"
+                                    style={seg.strokeStyle}
+                                    stroke-dasharray={seg.dashArray}
+                                    stroke-dashoffset={seg.dashOffset}
+                                    transform="rotate(-90 50 50)"
+                                ></circle>
+                            </template>
+                        </svg>
+                    </div>
+                    <ul class="ad-device-legend">
+                        <template for:each={deviceSegments} for:item="seg">
+                            <li class="ad-legend-item" key={seg.key}>
+                                <span class="ad-legend-swatch" style={seg.swatchStyle}></span>
+                                <span class="ad-legend-label">{seg.label}</span>
+                                <span class="ad-legend-value">{seg.displayPercent}</span>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="ad-chart-card">
+                <h2 class="ad-chart-card__title">Email Clients</h2>
+                <div class="ad-bar-chart">
+                    <template for:each={emailClientBars} for:item="client">
+                        <div class="ad-bar-row" key={client.key}>
+                            <span class="ad-bar-row__label">{client.label}</span>
+                            <div class="ad-bar-row__track">
+                                <div class="ad-bar-row__fill" style={client.barStyle}></div>
+                            </div>
+                            <span class="ad-bar-row__value">{client.formattedValue}</span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. Campaign Detail table -->
+        <div class="ad-creative">
+            <h2 class="ad-creative__title">Campaign Detail by Model</h2>
+            <table class="ad-table">
+                <thead>
+                    <tr>
+                        <th>Campaign</th>
+                        <th>Sends</th>
+                        <th>Sales</th>
+                        <th>Click Rate</th>
+                        <th>Open Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={creativeRows} for:item="row">
+                        <tr key={row.key}>
+                            <td>{row.creative}</td>
+                            <td>{row.sends}</td>
+                            <td>{row.sales}</td>
+                            <td>{row.clickRate}</td>
+                            <td>{row.openRate}</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>

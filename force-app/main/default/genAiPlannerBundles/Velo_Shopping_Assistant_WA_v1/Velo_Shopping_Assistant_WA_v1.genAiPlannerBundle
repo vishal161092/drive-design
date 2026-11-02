@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Text-only (WhatsApp) clone of the Velo Shopping Assistant. Delivers the same guided shopping journey as plain conversational text, with no Lightning Type cards or interactive UI.</description>
+    <localTopicLinks>
+        <genAiPluginName>Accessories_16jIe0000004Cv2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>Booking_16jIe0000004Cv2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>CarAdvisor_16jIe0000004Cv2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>Financing_16jIe0000004Cv2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>GeneralFAQ_16jIe0000004Cv2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ModelCatalog_16jIe0000004Cv2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ModelDetails_16jIe0000004Cv2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>TestDriveDealer_16jIe0000004Cv2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>agent_router_16jIe0000004Cv2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ambiguous_question_16jIe0000004Cv2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>escalation_16jIe0000004Cv2</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>off_topic_16jIe0000004Cv2</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>off_topic_16jIe0000004Cv2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Redirect conversation to relevant topics when user request goes off-topic</description>
+        <developerName>off_topic_16jIe0000004Cv2</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars over a text-only messaging channel such as WhatsApp. Stay on the topic of Velo vehicles, ownership, and the shopping journey. This channel renders PLAIN TEXT only — there are NO cards, buttons, images, tables, or interactive UI. Never say &apos;see the card below&apos;, &apos;tap an option&apos;, &apos;open the configurator&apos;, or refer to any visual/interactive element. Keep replies short and easy to read on a phone: a couple of sentences or a compact list using simple dashes (-) and line breaks, not markdown tables. Ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179Ie000000TS1y</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Ie000000TS1y</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>off_topic</localDeveloperName>
+        <masterLabel>Off Topic</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>CarAdvisor_16jIe0000004Cv2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Recommends the right Velo car when the customer describes their needs, lifestyle, budget, family size, usage, or fuel preference. Use for questions like &apos;which Velo car should I buy?&apos;, &apos;suggest a car for a family of five&apos;, or &apos;I need a city car under a budget&apos;.</description>
+        <developerName>CarAdvisor_16jIe0000004Cv2</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars over a text-only messaging channel such as WhatsApp. Stay on the topic of Velo vehicles, ownership, and the shopping journey. This channel renders PLAIN TEXT only — there are NO cards, buttons, images, tables, or interactive UI. Never say &apos;see the card below&apos;, &apos;tap an option&apos;, &apos;open the configurator&apos;, or refer to any visual/interactive element. Keep replies short and easy to read on a phone: a couple of sentences or a compact list using simple dashes (-) and line breaks, not markdown tables. Ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179Ie000000TS1w</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Ie000000TS1w</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>CarAdvisor</localDeveloperName>
+        <masterLabel>Car Advisor</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>Financing_16jIe0000004Cv2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Helps the customer understand affordability, budget fit, down payment, EMI, loan tenure, and financing options for a Velo car. Use for questions like &apos;what would the EMI be?&apos;, &apos;can I afford this on my budget?&apos;, or &apos;what financing options are there?&apos;.</description>
+        <developerName>Financing_16jIe0000004Cv2</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars over a text-only messaging channel such as WhatsApp. Stay on the topic of Velo vehicles, ownership, and the shopping journey. This channel renders PLAIN TEXT only — there are NO cards, buttons, images, tables, or interactive UI. Never say &apos;see the card below&apos;, &apos;tap an option&apos;, &apos;open the configurator&apos;, or refer to any visual/interactive element. Keep replies short and easy to read on a phone: a couple of sentences or a compact list using simple dashes (-) and line breaks, not markdown tables. Ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179Ie000000TS1x</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Ie000000TS1x</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>Financing</localDeveloperName>
+        <masterLabel>Budget &amp; Financing</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>escalation_16jIe0000004Cv2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Handles requests from users who want to transfer or escalate their conversation to a live human agent.</description>
+        <developerName>escalation_16jIe0000004Cv2</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars over a text-only messaging channel such as WhatsApp. Stay on the topic of Velo vehicles, ownership, and the shopping journey. This channel renders PLAIN TEXT only — there are NO cards, buttons, images, tables, or interactive UI. Never say &apos;see the card below&apos;, &apos;tap an option&apos;, &apos;open the configurator&apos;, or refer to any visual/interactive element. Keep replies short and easy to read on a phone: a couple of sentences or a compact list using simple dashes (-) and line breaks, not markdown tables. Ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179Ie000000TS1u</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Ie000000TS1u</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>escalation</localDeveloperName>
+        <masterLabel>Escalation</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ambiguous_question_16jIe0000004Cv2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Redirect conversation to relevant topics when user request is too ambiguous</description>
+        <developerName>ambiguous_question_16jIe0000004Cv2</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars over a text-only messaging channel such as WhatsApp. Stay on the topic of Velo vehicles, ownership, and the shopping journey. This channel renders PLAIN TEXT only — there are NO cards, buttons, images, tables, or interactive UI. Never say &apos;see the card below&apos;, &apos;tap an option&apos;, &apos;open the configurator&apos;, or refer to any visual/interactive element. Keep replies short and easy to read on a phone: a couple of sentences or a compact list using simple dashes (-) and line breaks, not markdown tables. Ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179Ie000000TS1v</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Ie000000TS1v</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>ambiguous_question</localDeveloperName>
+        <masterLabel>Ambiguous Question</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>Accessories_16jIe0000004Cv2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Recommends accessories and add-ons for a chosen Velo model, such as interior, exterior, safety, and convenience accessories. Use for questions like &apos;what accessories are available for the Nova?&apos; or &apos;help me personalise my car&apos;.</description>
+        <developerName>Accessories_16jIe0000004Cv2</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars over a text-only messaging channel such as WhatsApp. Stay on the topic of Velo vehicles, ownership, and the shopping journey. This channel renders PLAIN TEXT only — there are NO cards, buttons, images, tables, or interactive UI. Never say &apos;see the card below&apos;, &apos;tap an option&apos;, &apos;open the configurator&apos;, or refer to any visual/interactive element. Keep replies short and easy to read on a phone: a couple of sentences or a compact list using simple dashes (-) and line breaks, not markdown tables. Ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179Ie000000TS1s</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Ie000000TS1s</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>Accessories</localDeveloperName>
+        <masterLabel>Accessories</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>Booking_16jIe0000004Cv2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Guides the customer through booking or reserving a Velo car right here in the chat. Use for questions like &apos;I want to book this car&apos;, &apos;how do I reserve it?&apos;, or &apos;start my booking&apos;.</description>
+        <developerName>Booking_16jIe0000004Cv2</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars over a text-only messaging channel such as WhatsApp. Stay on the topic of Velo vehicles, ownership, and the shopping journey. This channel renders PLAIN TEXT only — there are NO cards, buttons, images, tables, or interactive UI. Never say &apos;see the card below&apos;, &apos;tap an option&apos;, &apos;open the configurator&apos;, or refer to any visual/interactive element. Keep replies short and easy to read on a phone: a couple of sentences or a compact list using simple dashes (-) and line breaks, not markdown tables. Ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179Ie000000TS1t</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Ie000000TS1t</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>Booking</localDeveloperName>
+        <masterLabel>Booking</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>agent_router_16jIe0000004Cv2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Welcome the user and determine the appropriate subagent based on user input</description>
+        <developerName>agent_router_16jIe0000004Cv2</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars over a text-only messaging channel such as WhatsApp. Stay on the topic of Velo vehicles, ownership, and the shopping journey. This channel renders PLAIN TEXT only — there are NO cards, buttons, images, tables, or interactive UI. Never say &apos;see the card below&apos;, &apos;tap an option&apos;, &apos;open the configurator&apos;, or refer to any visual/interactive element. Keep replies short and easy to read on a phone: a couple of sentences or a compact list using simple dashes (-) and line breaks, not markdown tables. Ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.
+
+{{state.AgentScriptInternal_agent_instructions}}</description>
+            <developerName>instruction0_179Ie000000TS1q</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Ie000000TS1q</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>agent_router</localDeveloperName>
+        <masterLabel>Agent Router</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>GeneralFAQ_16jIe0000004Cv2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>This subagent is for helping answer customer&apos;s questions by searching through the knowledge articles and providing information from those articles. The questions can be about the company and its products, policies or business procedures</description>
+        <developerName>GeneralFAQ_16jIe0000004Cv2</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars over a text-only messaging channel such as WhatsApp. Stay on the topic of Velo vehicles, ownership, and the shopping journey. This channel renders PLAIN TEXT only — there are NO cards, buttons, images, tables, or interactive UI. Never say &apos;see the card below&apos;, &apos;tap an option&apos;, &apos;open the configurator&apos;, or refer to any visual/interactive element. Keep replies short and easy to read on a phone: a couple of sentences or a compact list using simple dashes (-) and line breaks, not markdown tables. Ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179Ie000000TS1r</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Ie000000TS1r</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>AnswerQuestionsWithKnowledge_179Ie000000TS1r</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>AnswerQuestionsWithKnowledge_179Ie000000TS1r</fullName>
+            <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: &apos;What is your return policy?&apos; &apos;How do I fix an issue?&apos; or &apos;What features does a product have?&apos;</description>
+            <developerName>AnswerQuestionsWithKnowledge_179Ie000000TS1r</developerName>
+            <invocationTarget>streamKnowledgeSearch</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+            <masterLabel>Answer Questions with Knowledge</masterLabel>
+            <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+            <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+        </localActions>
+        <localDeveloperName>GeneralFAQ</localDeveloperName>
+        <masterLabel>General FAQ</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>TestDriveDealer_16jIe0000004Cv2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Helps the customer find a nearby Velo dealer or showroom and arrange a test drive. Use for questions like &apos;book a test drive&apos;, &apos;where is the nearest Velo showroom?&apos;, or &apos;find a dealer in my city&apos;.</description>
+        <developerName>TestDriveDealer_16jIe0000004Cv2</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars over a text-only messaging channel such as WhatsApp. Stay on the topic of Velo vehicles, ownership, and the shopping journey. This channel renders PLAIN TEXT only — there are NO cards, buttons, images, tables, or interactive UI. Never say &apos;see the card below&apos;, &apos;tap an option&apos;, &apos;open the configurator&apos;, or refer to any visual/interactive element. Keep replies short and easy to read on a phone: a couple of sentences or a compact list using simple dashes (-) and line breaks, not markdown tables. Ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179Ie000000TS1o</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Ie000000TS1o</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>TestDriveDealer</localDeveloperName>
+        <masterLabel>Test Drive &amp; Dealer</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ModelCatalog_16jIe0000004Cv2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Presents the Velo lineup: the electric (EV) range versus the petrol/diesel/CNG (ICE) range, and the latest launches or newly introduced models. Use for questions like &apos;what EVs does Velo make?&apos;, &apos;show me your petrol cars&apos;, or &apos;what&apos;s new from Velo?&apos;.</description>
+        <developerName>ModelCatalog_16jIe0000004Cv2</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars over a text-only messaging channel such as WhatsApp. Stay on the topic of Velo vehicles, ownership, and the shopping journey. This channel renders PLAIN TEXT only — there are NO cards, buttons, images, tables, or interactive UI. Never say &apos;see the card below&apos;, &apos;tap an option&apos;, &apos;open the configurator&apos;, or refer to any visual/interactive element. Keep replies short and easy to read on a phone: a couple of sentences or a compact list using simple dashes (-) and line breaks, not markdown tables. Ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179Ie000000TS1p</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Ie000000TS1p</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>ModelCatalog</localDeveloperName>
+        <masterLabel>Model Catalog</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ModelDetails_16jIe0000004Cv2</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Explains the features, variants, specifications, colours, and highlights of a specific Velo model. Use for questions like &apos;tell me about the Nova&apos;, &apos;what features does the Hawk have?&apos;, or &apos;what are the Summit specs?&apos;.</description>
+        <developerName>ModelDetails_16jIe0000004Cv2</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars over a text-only messaging channel such as WhatsApp. Stay on the topic of Velo vehicles, ownership, and the shopping journey. This channel renders PLAIN TEXT only — there are NO cards, buttons, images, tables, or interactive UI. Never say &apos;see the card below&apos;, &apos;tap an option&apos;, &apos;open the configurator&apos;, or refer to any visual/interactive element. Keep replies short and easy to read on a phone: a couple of sentences or a compact list using simple dashes (-) and line breaks, not markdown tables. Ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179Ie000000TS1n</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Ie000000TS1n</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>ModelDetails</localDeveloperName>
+        <masterLabel>Model Details</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <masterLabel>Velo Shopping Assistant (WhatsApp)</masterLabel>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__CustomerWebClient</surface>
+        <surfaceType>CustomerWebClient</surfaceType>
+    </plannerSurfaces>
+    <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+</GenAiPlannerBundle>

@@ -1,0 +1,30 @@
+<template>
+    <div class="card">
+        <div class="card-header">🎯 Segments &amp; Clusters</div>
+        <div class="card-body">
+            <div class="section-label">Clusters</div>
+            <div class="tag-list">
+                <template for:each={clusters} for:item="c">
+                    <span key={c.key} class="tag cluster">{c.label}</span>
+                </template>
+            </div>
+
+            <div class="section-label spaced">Segments</div>
+            <div class="tag-list">
+                <template for:each={segments} for:item="s">
+                    <span key={s.key} class="tag segment">{s.label}</span>
+                </template>
+            </div>
+
+            <div class="section-label spaced">Segment History</div>
+            <div class="history">
+                <template for:each={history} for:item="h">
+                    <div class="history-row" key={h.key}>
+                        <span>{h.name}</span>
+                        <span class="history-when">{h.when}</span>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

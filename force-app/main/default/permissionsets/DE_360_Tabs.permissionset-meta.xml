@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>DE 360 Tabs</label>
+    <description>Grants visibility to the Dealer 360 and Vehicle 360 Lightning tabs.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <tabSettings>
+        <tab>de_Dealer_360</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>de_Vehicle_360</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

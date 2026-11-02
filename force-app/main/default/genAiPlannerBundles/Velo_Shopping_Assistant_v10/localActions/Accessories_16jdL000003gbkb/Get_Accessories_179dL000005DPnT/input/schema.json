@@ -1,0 +1,14 @@
+{
+  "required" : [ ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "modelKey" : {
+      "title" : "Model Key",
+      "description" : "The Velo model the customer is shopping accessories for, e.g. 'summit', 'nova', 'spark'. Defaults to Summit.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

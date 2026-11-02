@@ -1,0 +1,181 @@
+/* Deep-black glass theme.
+   Structure/markup unchanged — only colours / surfaces are themed. */
+:host {
+    --surface: rgba(18, 18, 22, 0.96);
+    --surface-2: rgba(32, 32, 40, 0.96);
+    --surface-3: rgba(255, 255, 255, 0.06);
+    --line: rgba(255, 255, 255, 0.14);
+    --line-strong: rgba(255, 255, 255, 0.24);
+
+    --glass-blur: 14px;
+    --glass-tint: linear-gradient(155deg, rgba(30, 30, 37, 0.98) 0%, rgba(14, 14, 18, 0.98) 46%, rgba(8, 8, 11, 0.99) 100%);
+    --glass-sheen: rgba(255, 255, 255, 0.14);
+    --shadow-card: inset 0 1px 0 var(--glass-sheen), inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 14px 40px rgba(0, 0, 0, 0.6);
+    --radius: 14px;
+
+    --accent: #e11b22;
+    --accent-2: #ff3b41;
+    --accent-soft: rgba(225, 27, 34, 0.16);
+    --accent-line: rgba(225, 27, 34, 0.42);
+
+    --pos: #34c759;
+    --pos-soft: rgba(52, 199, 89, 0.16);
+    --warn: #f5a623;
+    --warn-soft: rgba(245, 166, 35, 0.16);
+    --info: #5ac8fa;
+    --info-soft: rgba(90, 200, 250, 0.16);
+
+    --brand: var(--accent);
+    --ink: #f4f4f6;
+    --ink-2: #c7c7cf;
+    --text: #f4f4f6;
+    --muted: #8f8f9a;
+    --border: rgba(255, 255, 255, 0.14);
+    --border-light: rgba(255, 255, 255, 0.10);
+
+    display: block;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+
+    /* This component has no wrapping .card in its markup, so the host itself
+       is the glass shell — otherwise the light text would sit on the bare
+       (white) Lightning page and wash out. */
+    background: var(--glass-tint);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    padding: 16px;
+    overflow: hidden;
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+}
+
+.section-header {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.data-table th {
+    text-align: left;
+    padding: 10px 12px;
+    background: var(--surface-2);
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.data-table th:first-child {
+    border-radius: 4px 0 0 0;
+}
+
+.data-table th:last-child {
+    border-radius: 0 4px 0 0;
+}
+
+.data-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-2);
+}
+
+.data-table tr:hover td {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.channel-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.channel-badge.store {
+    background: var(--accent-soft);
+    color: var(--accent-2);
+}
+
+.channel-badge.app {
+    background: var(--pos-soft);
+    color: var(--pos);
+}
+
+.channel-badge.whatsapp {
+    background: rgba(18, 140, 126, 0.20);
+    color: #3dd4bb;
+}
+
+.channel-badge.email {
+    background: rgba(255, 77, 79, 0.16);
+    color: #ff6b6d;
+}
+
+.status-pill {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.status-pill.resolved {
+    background: var(--pos-soft);
+    color: var(--pos);
+}
+
+.status-pill.open {
+    background: var(--warn-soft);
+    color: var(--warn);
+}
+
+.status-pill.closed {
+    background: var(--surface-3);
+    color: var(--muted);
+}
+
+/* Stats footer */
+.stats-box {
+    margin-top: 12px;
+    padding: 10px;
+    background: var(--surface-3);
+    border-radius: 10px;
+    border: 1px solid var(--line);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    text-align: center;
+    font-size: 11px;
+}
+
+.stat-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.stat-value.green {
+    color: var(--pos);
+}
+
+.stat-value.brand {
+    color: var(--accent-2);
+}

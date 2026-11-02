@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Deliver personalized customer interactions with an autonomous AI agent. Agentforce Service Agent intelligently supports your customers with common inquiries and escalates complex issues.</description>
+    <localTopicLinks>
+        <genAiPluginName>Accessories_16jdL000003gbkb</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>Booking_16jdL000003gbkb</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>CarAdvisor_16jdL000003gbkb</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>CarConfigurator_16jdL000003gbkb</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>Financing_16jdL000003gbkb</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>GeneralFAQ_16jdL000003gbkb</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ModelCatalog_16jdL000003gbkb</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ModelDetails_16jdL000003gbkb</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>TestDriveDealer_16jdL000003gbkb</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>agent_router_16jdL000003gbkb</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ambiguous_question_16jdL000003gbkb</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>escalation_16jdL000003gbkb</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>off_topic_16jdL000003gbkb</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>Financing_16jdL000003gbkb</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Helps the customer understand affordability, budget fit, down payment, EMI, loan tenure, and financing options for a Velo car. Use for questions like &apos;what would the EMI be?&apos;, &apos;can I afford this on my budget?&apos;, or &apos;what financing options are there?&apos;.</description>
+        <developerName>Financing_16jdL000003gbkb</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars. Stay on the topic of Velo vehicles, ownership, and the shopping journey. Be concise and helpful, ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179dL000005DPnN</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179dL000005DPnN</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>Financing</localDeveloperName>
+        <masterLabel>Budget &amp; Financing</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>TestDriveDealer_16jdL000003gbkb</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Helps the customer find a nearby Velo dealer or showroom and arrange a test drive. Use for questions like &apos;book a test drive&apos;, &apos;where is the nearest Velo showroom?&apos;, or &apos;find a dealer in my city&apos;.</description>
+        <developerName>TestDriveDealer_16jdL000003gbkb</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars. Stay on the topic of Velo vehicles, ownership, and the shopping journey. Be concise and helpful, ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179dL000005DPnO</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179dL000005DPnO</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>Get_Velo_Dealers_179dL000005DPnO</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>Get_Velo_Dealers_179dL000005DPnO</fullName>
+            <description>Returns a list of nearby Velo dealers/showrooms (name, category, address, phone, Google Maps link) rendered by the veloDealerList Lightning Type. Call this whenever the customer wants to find a dealer, showroom, or arrange a test drive in a location.</description>
+            <developerName>Get_Velo_Dealers_179dL000005DPnO</developerName>
+            <invocationTarget>Velo_DealerListAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Velo_Dealers</localDeveloperName>
+            <masterLabel>Get Velo Dealers</masterLabel>
+            <progressIndicatorMessage>Finding dealers near you ...</progressIndicatorMessage>
+        </localActions>
+        <localDeveloperName>TestDriveDealer</localDeveloperName>
+        <masterLabel>Test Drive &amp; Dealer</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>Booking_16jdL000003gbkb</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Guides the customer through booking or reserving a Velo car right here in the chat. Use for questions like &apos;I want to book this car&apos;, &apos;how do I reserve it?&apos;, or &apos;start my booking&apos;.</description>
+        <developerName>Booking_16jdL000003gbkb</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars. Stay on the topic of Velo vehicles, ownership, and the shopping journey. Be concise and helpful, ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179dL000005DPnP</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179dL000005DPnP</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>Get_Booking_Options_179dL000005DPnP</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>Get_Velo_Dealers_179dL000005DPnP</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>Get_Velo_Dealers_179dL000005DPnP</fullName>
+            <description>Returns a list of nearby Velo dealers/showrooms (name, category, address, phone, Google Maps link) rendered by the veloDealerList Lightning Type. In booking, call this after the variant and colour are chosen so the customer can pick a dealership and schedule their visit or test drive.</description>
+            <developerName>Get_Velo_Dealers_179dL000005DPnP</developerName>
+            <invocationTarget>Velo_DealerListAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Velo_Dealers</localDeveloperName>
+            <masterLabel>Get Velo Dealers</masterLabel>
+            <progressIndicatorMessage>Finding dealers near you ...</progressIndicatorMessage>
+        </localActions>
+        <localActions>
+            <fullName>Get_Booking_Options_179dL000005DPnP</fullName>
+            <description>Returns selectable Velo booking options — variants or colours — as a picker card rendered by the veloBookingOptions Lightning Type. Call this when the customer needs to pick a variant or colour while booking; pass optionType &apos;variant&apos; or &apos;color&apos;.</description>
+            <developerName>Get_Booking_Options_179dL000005DPnP</developerName>
+            <invocationTarget>Velo_BookingOptionsAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Booking_Options</localDeveloperName>
+            <masterLabel>Get Booking Options</masterLabel>
+            <progressIndicatorMessage>Loading options ...</progressIndicatorMessage>
+        </localActions>
+        <localDeveloperName>Booking</localDeveloperName>
+        <masterLabel>Booking</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>agent_router_16jdL000003gbkb</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Welcome the user and determine the appropriate subagent based on user input</description>
+        <developerName>agent_router_16jdL000003gbkb</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars. Stay on the topic of Velo vehicles, ownership, and the shopping journey. Be concise and helpful, ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.
+
+{{state.AgentScriptInternal_agent_instructions}}</description>
+            <developerName>instruction0_179dL000005DPnQ</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179dL000005DPnQ</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>agent_router</localDeveloperName>
+        <masterLabel>Agent Router</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ModelDetails_16jdL000003gbkb</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Explains the features, variants, specifications, colours, and highlights of a specific Velo model, and helps the customer preview the car. Use for questions like &apos;tell me about the Nova&apos;, &apos;what features does the Hawk have?&apos;, or &apos;can I see the car?&apos;.</description>
+        <developerName>ModelDetails_16jdL000003gbkb</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars. Stay on the topic of Velo vehicles, ownership, and the shopping journey. Be concise and helpful, ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179dL000005DPnJ</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179dL000005DPnJ</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>Get_Velo_Model_Card_179dL000005DPnJ</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>Get_Velo_Model_Card_179dL000005DPnJ</fullName>
+            <description>Returns a rich Velo model detail card (image, price range, fuel options, key specs, highlights) rendered by the veloModelCard Lightning Type. Call this whenever the customer wants details, specs, features, or to see a specific Velo model.</description>
+            <developerName>Get_Velo_Model_Card_179dL000005DPnJ</developerName>
+            <invocationTarget>Velo_ModelCardAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Velo_Model_Card</localDeveloperName>
+            <masterLabel>Get Velo Model Card</masterLabel>
+            <progressIndicatorMessage>Loading model details ...</progressIndicatorMessage>
+        </localActions>
+        <localDeveloperName>ModelDetails</localDeveloperName>
+        <masterLabel>Model Details &amp; Preview</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>off_topic_16jdL000003gbkb</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Redirect conversation to relevant topics when user request goes off-topic</description>
+        <developerName>off_topic_16jdL000003gbkb</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars. Stay on the topic of Velo vehicles, ownership, and the shopping journey. Be concise and helpful, ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179dL000005DPnK</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179dL000005DPnK</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>off_topic</localDeveloperName>
+        <masterLabel>Off Topic</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ambiguous_question_16jdL000003gbkb</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Redirect conversation to relevant topics when user request is too ambiguous</description>
+        <developerName>ambiguous_question_16jdL000003gbkb</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars. Stay on the topic of Velo vehicles, ownership, and the shopping journey. Be concise and helpful, ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179dL000005DPnL</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179dL000005DPnL</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>ambiguous_question</localDeveloperName>
+        <masterLabel>Ambiguous Question</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>escalation_16jdL000003gbkb</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Handles requests from users who want to transfer or escalate their conversation to a live human agent.</description>
+        <developerName>escalation_16jdL000003gbkb</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars. Stay on the topic of Velo vehicles, ownership, and the shopping journey. Be concise and helpful, ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179dL000005DPnM</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179dL000005DPnM</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>escalation</localDeveloperName>
+        <masterLabel>Escalation</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>GeneralFAQ_16jdL000003gbkb</fullName>
+        <canEscalate>false</canEscalate>
+        <description>This subagent is for helping answer customer&apos;s questions by searching through the knowledge articles and providing information from those articles. The questions can be about the company and its products, policies or business procedures</description>
+        <developerName>GeneralFAQ_16jdL000003gbkb</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars. Stay on the topic of Velo vehicles, ownership, and the shopping journey. Be concise and helpful, ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179dL000005DPnV</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179dL000005DPnV</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>AnswerQuestionsWithKnowledge_179dL000005DPnV</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>AnswerQuestionsWithKnowledge_179dL000005DPnV</fullName>
+            <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: &apos;What is your return policy?&apos; &apos;How do I fix an issue?&apos; or &apos;What features does a product have?&apos;</description>
+            <developerName>AnswerQuestionsWithKnowledge_179dL000005DPnV</developerName>
+            <invocationTarget>streamKnowledgeSearch</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+            <masterLabel>Answer Questions with Knowledge</masterLabel>
+            <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+            <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+        </localActions>
+        <localDeveloperName>GeneralFAQ</localDeveloperName>
+        <masterLabel>General FAQ</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>CarAdvisor_16jdL000003gbkb</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Recommends the right Velo car when the customer describes their needs, lifestyle, budget, family size, usage, or fuel preference. Use for questions like &apos;which Velo car should I buy?&apos;, &apos;suggest a car for a family of five&apos;, or &apos;I need a city car under a budget&apos;.</description>
+        <developerName>CarAdvisor_16jdL000003gbkb</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars. Stay on the topic of Velo vehicles, ownership, and the shopping journey. Be concise and helpful, ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179dL000005DPnR</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179dL000005DPnR</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>Compare_Velo_Models_179dL000005DPnR</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>Compare_Velo_Models_179dL000005DPnR</fullName>
+            <description>Returns a side-by-side comparison card of two or more Velo models (image, price, fuel, mileage, seating, safety, transmission) rendered by the veloModelComparison Lightning Type. Call this whenever the customer wants to compare Velo models or when recommending more than one model.</description>
+            <developerName>Compare_Velo_Models_179dL000005DPnR</developerName>
+            <invocationTarget>Velo_ModelComparisonAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Compare_Velo_Models</localDeveloperName>
+            <masterLabel>Compare Velo Models</masterLabel>
+            <progressIndicatorMessage>Comparing models ...</progressIndicatorMessage>
+        </localActions>
+        <localDeveloperName>CarAdvisor</localDeveloperName>
+        <masterLabel>Car Advisor</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ModelCatalog_16jdL000003gbkb</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Presents the Velo lineup: the electric (EV) range versus the petrol/diesel/CNG (ICE) range, and the latest launches or newly introduced models. Use for questions like &apos;what EVs does Velo make?&apos;, &apos;show me your petrol cars&apos;, or &apos;what&apos;s new from Velo?&apos;.</description>
+        <developerName>ModelCatalog_16jdL000003gbkb</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars. Stay on the topic of Velo vehicles, ownership, and the shopping journey. Be concise and helpful, ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179dL000005DPnS</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179dL000005DPnS</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>ModelCatalog</localDeveloperName>
+        <masterLabel>Model Catalog</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>Accessories_16jdL000003gbkb</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Recommends accessories and add-ons for a chosen Velo model, such as interior, exterior, safety, and convenience accessories. Use for questions like &apos;what accessories are available for the Nova?&apos; or &apos;help me personalise my car&apos;.</description>
+        <developerName>Accessories_16jdL000003gbkb</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars. Stay on the topic of Velo vehicles, ownership, and the shopping journey. Be concise and helpful, ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179dL000005DPnT</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179dL000005DPnT</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>Get_Accessories_179dL000005DPnT</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>Get_Accessories_179dL000005DPnT</fullName>
+            <description>Returns the rich, interactive Velo accessories catalog card (veloAccessories Lightning Type) with official product photos, prices, category filters, and an in-chat add-to-cart that saves to the customer&apos;s build. Call this whenever the customer wants to browse, add, or shop accessories for a Velo model; pass the model as modelKey.</description>
+            <developerName>Get_Accessories_179dL000005DPnT</developerName>
+            <invocationTarget>Velo_AccessoriesAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Accessories</localDeveloperName>
+            <masterLabel>Get Accessories</masterLabel>
+            <progressIndicatorMessage>Loading accessories ...</progressIndicatorMessage>
+        </localActions>
+        <localDeveloperName>Accessories</localDeveloperName>
+        <masterLabel>Accessories</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>CarConfigurator_16jdL000003gbkb</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Lets the customer personalize and visualize a Velo car in an interactive 3D configurator — paint colour, finish, wheels, and interior — rotating it 360 degrees. Use for requests like &apos;customize this car&apos;, &apos;configure my Summit&apos;, &apos;personalize it&apos;, &apos;build my car&apos;, &apos;change the colour&apos;, or &apos;show it in 3D&apos;.</description>
+        <developerName>CarConfigurator_16jdL000003gbkb</developerName>
+        <genAiPluginInstructions>
+            <description>You are the Velo Shopping Assistant, a friendly, knowledgeable guide who helps customers discover, compare, and buy Velo cars. Stay on the topic of Velo vehicles, ownership, and the shopping journey. Be concise and helpful, ask clarifying questions when the request is vague, and hand off to the right specialist subagent for the customer&apos;s need.</description>
+            <developerName>instruction0_179dL000005DPnU</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179dL000005DPnU</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>Get_Car_Configurator_179dL000005DPnU</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>Get_Car_Configurator_179dL000005DPnU</fullName>
+            <description>Returns the interactive 3D Velo car configurator card, rendered by the veloCarConfigurator Lightning Type, so the customer can personalize paint, finish, wheels, and interior live in chat. Call this whenever the customer wants to customize, configure, personalize, build, or see a car in 3D. Pass modelKey (e.g. &apos;summit&apos;) to open on a specific model; defaults to Summit.</description>
+            <developerName>Get_Car_Configurator_179dL000005DPnU</developerName>
+            <invocationTarget>Velo_CarConfiguratorAction</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Car_Configurator</localDeveloperName>
+            <masterLabel>Get Car Configurator</masterLabel>
+            <progressIndicatorMessage>Opening the configurator ...</progressIndicatorMessage>
+        </localActions>
+        <localDeveloperName>CarConfigurator</localDeveloperName>
+        <masterLabel>Car Configurator</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <masterLabel>Velo Shopping Assistant</masterLabel>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__CustomerWebClient</surface>
+        <surfaceType>CustomerWebClient</surfaceType>
+    </plannerSurfaces>
+    <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+    <voiceDefinition>
+        <developerName>voiceConfig_16jdL000003gbkb</developerName>
+        <inboundFillerWordsBool>false</inboundFillerWordsBool>
+        <inboundModel>sfdc_ai__Default_Nova_2_PhoneCall</inboundModel>
+        <label>voiceConfig_16jdL000003gbkb</label>
+        <languageCode>en_US</languageCode>
+        <outboundModel>sfdc_ai__Default_Eleven_Flash_V2_5</outboundModel>
+        <outboundSimilarity>0.75</outboundSimilarity>
+        <outboundSpeedNum>1.0</outboundSpeedNum>
+        <outboundStability>0.65</outboundStability>
+        <outboundVoice>Mark</outboundVoice>
+        <voiceIdentifier>UgBBYS2sOqTuMpoF3BR0</voiceIdentifier>
+    </voiceDefinition>
+</GenAiPlannerBundle>

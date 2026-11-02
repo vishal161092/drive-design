@@ -1,0 +1,14 @@
+{
+  "required" : [ ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "modelKey" : {
+      "title" : "Model Key",
+      "description" : "Velo model key to open the configurator on, e.g. 'summit', 'spark', 'tern', 'aero', 'pico'. Defaults to Summit.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

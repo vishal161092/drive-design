@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-label="Wheel Arch placeholder">
+  <!-- Generic placeholder artwork. Replace with your own licensed imagery. -->
+  <rect width="600" height="400" fill="#eef2f5"/>
+  <rect x="200" y="100" width="200" height="140" rx="18" fill="#cfd8dc" stroke="#90a4ae" stroke-width="4"/>
+  <circle cx="300" cy="170" r="34" fill="#90a4ae"/>
+  <text x="300" y="300" font-family="Arial, Helvetica, sans-serif" font-size="30" text-anchor="middle" fill="#455a64">Wheel Arch</text>
+</svg>

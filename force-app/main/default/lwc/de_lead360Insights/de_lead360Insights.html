@@ -1,0 +1,23 @@
+<template>
+    <div class="card">
+        <div class="card-header">🧠 AI-Powered Insights</div>
+        <div class="card-body">
+            <div class="insight-grid">
+                <template for:each={tiles} for:item="t">
+                    <div key={t.key} class={t.itemClass}>
+                        <div class="insight-label">{t.label}</div>
+                        <div class={t.valueClass} style={t.valueStyle}>{t.value}</div>
+                        <template lwc:if={t.showSub}>
+                            <div class="insight-sub">{t.sub}</div>
+                        </template>
+                        <template lwc:if={t.showBar}>
+                            <div class="progress-bar">
+                                <div class={t.barClass} style={t.barStyle}></div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

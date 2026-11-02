@@ -1,0 +1,128 @@
+.tmcmp-root {
+    padding: 0.25rem;
+    padding-top: 20px;
+    max-width: 920px;
+}
+
+.tmcmp-heading {
+    margin: 0 0 0.75rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #25289d;
+}
+
+.tmcmp-scroll {
+    overflow-x: auto;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 1rem;
+    background: #ffffff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.tmcmp-table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 480px;
+}
+
+.tmcmp-corner {
+    background: #ffffff;
+    border-bottom: 1.5px solid #eaeef7;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+}
+
+.tmcmp-model-head {
+    padding: 0.9rem 0.75rem;
+    text-align: center;
+    vertical-align: top;
+    background: linear-gradient(145deg, #f5f7fb, #e8eef8);
+    border-bottom: 1.5px solid #eaeef7;
+    border-left: 1px solid #eef1f7;
+    min-width: 140px;
+}
+
+/* Fixed-height box so every car image occupies the same vertical space across
+   columns — keeps the name / price / button rows aligned regardless of each
+   image's intrinsic aspect ratio. */
+.tmcmp-model-imgwrap {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.4rem;
+}
+
+.tmcmp-model-img {
+    max-width: 100%;
+    max-height: 120px;
+    object-fit: contain;
+    display: block;
+}
+
+.tmcmp-model-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #25289d;
+    line-height: 1.2;
+    /* Reserve two lines so single- and double-line names still align the price. */
+    min-height: 2.4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tmcmp-model-price {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-top: 0.2rem;
+}
+
+.tmcmp-cta {
+    margin-top: 0.5rem;
+    border: none;
+    border-radius: 0.4rem;
+    background: #25289d;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.72rem;
+    padding: 0.4rem 0.85rem;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: background 0.2s ease;
+}
+
+.tmcmp-cta:hover {
+    background: #1b1e7a;
+}
+
+.tmcmp-row:nth-child(even) {
+    background: #f9fafd;
+}
+
+.tmcmp-row-label {
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #8a94a6;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    background: inherit;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    border-right: 1px solid #eef1f7;
+}
+
+.tmcmp-cell {
+    padding: 0.6rem 0.75rem;
+    text-align: center;
+    font-size: 0.82rem;
+    color: #2d2d30;
+    line-height: 1.35;
+    border-left: 1px solid #f0f2f8;
+}

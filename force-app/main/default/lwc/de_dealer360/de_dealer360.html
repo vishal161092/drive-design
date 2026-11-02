@@ -1,0 +1,338 @@
+<template>
+  <div class="de-scope">
+
+    <!-- ===== Header + search ===== -->
+    <div class="header">
+      <div class="brand">
+        <div class="mark">T</div>
+        <div>
+          <h1>VELO MOTORS</h1>
+          <div class="tag">DEALER 360 · DATA CLOUD</div>
+        </div>
+        <template lwc:if={hasData}>
+          <button class="backbtn hdr-back" onclick={goBack}>← Back to dealers</button>
+        </template>
+      </div>
+      <div class="hsearch">
+        <lightning-input variant="label-hidden" type="search"
+          placeholder="Search dealer by name, code, city or state…"
+          value={searchTerm} onchange={handleSearch} oninput={handleSearch}></lightning-input>
+        <template lwc:if={showResults}>
+          <div class="suggest show">
+            <template for:each={results} for:item="r">
+              <div key={r.dealerId} class="row" data-id={r.dealerId} onclick={handleSelect}>
+                <div class="n">{r.name}</div>
+                <div class="d">{r.dealerId} · {r.city} · {r.state}</div>
+              </div>
+            </template>
+          </div>
+        </template>
+      </div>
+      <div class="who">
+        <div>Dealer network</div>
+        <div class="live">● Data Cloud · unified dealer master</div>
+      </div>
+    </div>
+
+    <!-- ===== States ===== -->
+    <template lwc:if={loading}><div class="state">Loading dealer profile…</div></template>
+    <template lwc:if={error}><div class="state err">{error}</div></template>
+    <template lwc:if={showEmptyText}><div class="state">Search for a dealer to load their live Data Cloud 360.</div></template>
+    <template lwc:if={showDirectory}>
+      <div class="netw">
+        <!-- stats strip -->
+        <div class="stats-strip">
+          <div class="stat-card"><div class="label">Total Dealers</div><div class="value teal">{totalCount}</div><div class="sub-label">Across all regions</div></div>
+          <div class="stat-card"><div class="label">Sales &amp; Service</div><div class="value">{ssCount}</div><div class="sub-label">Full-service outlets</div></div>
+          <div class="stat-card"><div class="label">Sales Only</div><div class="value">{salesCount}</div><div class="sub-label">Showroom only</div></div>
+          <div class="stat-card"><div class="label">Service Only</div><div class="value">{serviceCount}</div><div class="sub-label">Workshop only</div></div>
+          <div class="stat-card"><div class="label">EV Certified</div><div class="value teal">{evCount}</div><div class="sub-label">EV-ready dealers</div></div>
+        </div>
+
+        <!-- filter bar -->
+        <div class="filter-bar">
+          <div class="filter-chips">
+            <button class={allChipClass} data-f="all" onclick={setFilter}>All</button>
+            <button class={ssChipClass} data-f="ss" onclick={setFilter}>Sales &amp; Service</button>
+            <button class={salesChipClass} data-f="sales" onclick={setFilter}>Sales Only</button>
+            <button class={serviceChipClass} data-f="service" onclick={setFilter}>Service Only</button>
+            <button class={evChipClass} data-f="ev" onclick={setFilter}>EV Certified</button>
+          </div>
+          <div class="showing-count">Showing <span>{showingCount}</span> dealers</div>
+        </div>
+
+        <!-- table -->
+        <div class="table-wrapper">
+          <table class="netw-table">
+            <thead>
+              <tr>
+                <th class="th-dot"></th>
+                <th class={thName} data-col="name" onclick={sortBy}>Dealer Name</th>
+                <th class={thCity} data-col="city" onclick={sortBy}>City</th>
+                <th class={thState} data-col="state" onclick={sortBy}>State</th>
+                <th class={thCode} data-col="dealerId" onclick={sortBy}>Dealer Code</th>
+                <th class={thType} data-col="typeLabel" onclick={sortBy}>Type</th>
+                <th class={thEv} data-col="ev" onclick={sortBy} style="text-align:center">EV Certified</th>
+                <th class={thLastActive} data-col="lastActive" onclick={sortBy}>Last Active</th>
+              </tr>
+            </thead>
+            <tbody>
+              <template for:each={displayRows} for:item="r">
+                <tr key={r.dealerId} data-id={r.dealerId} onclick={handleSelect}>
+                  <td class="td-dot"><span class={r.dotClass}></span></td>
+                  <td><span class="dealer-name">{r.name}</span></td>
+                  <td><span class="city">{r.city}</span></td>
+                  <td><span class="state">{r.state}</span></td>
+                  <td><span class="mono">{r.dealerId}</span></td>
+                  <td><span class={r.typeClass}>{r.typeLabel}</span></td>
+                  <td style="text-align:center"><span class={r.evClass}>{r.evMark}</span></td>
+                  <td><span class="last-active">{r.lastActive}</span></td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </template>
+
+    <!-- ===== Body ===== -->
+    <template lwc:if={hasData}>
+    <div class="wrap">
+
+      <!-- ============ LEFT: identity ============ -->
+      <div class="col">
+        <div class="card">
+          <div class="prof">
+            <div class="dmark">🏢</div>
+            <h2>{data.name}</h2>
+            <div class="sub">{data.dealerId} · {data.business}</div>
+            <div class="chips">
+              <template lwc:if={data.csi}><span class="pill pill-gold">CSI {data.csi}</span></template>
+              <template lwc:if={data.establishedSub}><span class="pill pill-grey">Est. {data.established}</span></template>
+            </div>
+          </div>
+          <div class="meta">
+            <div class="r"><span class="k">📍</span><span>{data.addressLine}</span></div>
+            <template lwc:if={data.phoneMasked}><div class="r"><span class="k">📱</span><span>{data.phoneMasked}</span></div></template>
+            <template lwc:if={data.email}><div class="r"><span class="k">✉️</span><span>{data.email}</span></div></template>
+            <template lwc:if={data.showroom}><div class="r"><span class="k">📐</span><span>{data.showroom} showroom</span></div></template>
+            <template lwc:if={data.totalCustomers}><div class="r"><span class="k">👥</span><span>{data.totalCustomers} customers served</span></div></template>
+          </div>
+          <div class="cert">
+            <div class="sec-t">Certifications</div>
+            <div class="certrow">
+              <span class="pill pill-green">✓ Sales</span>
+              <span class="pill pill-green">✓ Service</span>
+              <span class={evCertClass}>{evCertLabel}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3><span class="ic">◎</span> Customer Satisfaction</h3><span class="pill pill-grey">CI</span></div>
+          <div class="bd">
+            <div class="gauge-wrap">
+              <div class="gauge" style={gaugeStyle}><div class="in"><div class="num">{data.csi}</div><div class="lbl">CSI / 5</div></div></div>
+              <template lwc:if={data.avgRating}><div class="gcap">Avg rating {data.avgRating} · vs network ~4.0</div></template>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3><span class="ic">🚗</span> Models Stocked</h3></div>
+          <div class="bd">
+            <template lwc:if={modelChips.length}>
+              <div class="chipwrap">
+                <template for:each={modelChips} for:item="m">
+                  <span key={m.key} class={m.cls}>{m.label}</span>
+                </template>
+              </div>
+            </template>
+            <template lwc:else><div class="faint">No models on file.</div></template>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ CENTER: performance + tabs ============ -->
+      <div class="col">
+        <div class="kpis">
+          <div class="kpi"><div class="lbl">🎯 Sales vs Target</div><div class="val">{data.kpiSales.value}</div><div class={kpiSalesSubClass}>{data.kpiSales.sub}</div></div>
+          <div class="kpi"><div class="lbl">😊 CSI Score</div><div class="val">{data.kpiCsi.value}</div><div class="sub">{data.kpiCsi.sub}</div></div>
+          <div class="kpi"><div class="lbl">👥 Customers</div><div class="val">{data.kpiCustomers.value}</div><div class="sub">{data.kpiCustomers.sub}</div></div>
+          <div class="kpi"><div class="lbl">📈 Rank (state)</div><div class="val">{data.kpiRank.value}</div><div class="sub">{data.kpiRank.sub}</div></div>
+          <div class="kpi"><div class="lbl">🔧 Service NPS</div><div class="val">{data.kpiNps.value}</div><div class="sub">{data.kpiNps.sub}</div></div>
+          <div class="kpi"><div class="lbl">📐 Showroom</div><div class="val">{data.kpiShowroom.value}</div><div class="sub">{data.kpiShowroom.sub}</div></div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3><span class="ic">🎯</span> Monthly Sales Target</h3><span class="pill pill-green">{data.attainmentPill}</span></div>
+          <div class="bd">
+            <div class="progress">
+              <div class="t"><span>{data.salesActual} units sold</span><span class="tgt">Target {data.salesTarget}</span></div>
+              <div class="pbar"><span style={data.salesBarStyle}></span><div class="target" style={data.targetMarkerStyle}></div></div>
+              <div class="faint mt6">Bar = actual; gold marker = monthly target.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="tabs">
+            <div class={perfTabClass} data-tab="perf" onclick={handleTab}>Performance</div>
+            <div class={custTabClass} data-tab="cust" onclick={handleTab}>Customers</div>
+            <div class={invTabClass} data-tab="inv" onclick={handleTab}>Model Demand</div>
+            <div class={campTabClass} data-tab="camp" onclick={handleTab}>Campaigns</div>
+            <div class={alertsTabClass} data-tab="alerts" onclick={handleTab}>Alerts</div>
+          </div>
+          <div class="tabbody">
+
+            <!-- Performance -->
+            <template lwc:if={isPerf}>
+              <div class="panel active">
+                <div class="sec-t">Performance Snapshot · CI_Dealer_Performance</div>
+                <table>
+                  <thead><tr><th>Metric</th><th>Value</th><th>Network benchmark</th></tr></thead>
+                  <tbody>
+                    <template for:each={data.perfRows} for:item="p">
+                      <tr key={p.metric}><td>{p.metric}</td><td><b>{p.value}</b></td><td>{p.benchmark}</td></tr>
+                    </template>
+                  </tbody>
+                </table>
+                <div class="sec-t mt18">Recent Milestones</div>
+                <div class="timeline">
+                  <template for:each={milestoneRows} for:item="m">
+                    <div key={m.key} class={m.cls}><div class="d">{m.label}</div><div class="c">{m.text}</div></div>
+                  </template>
+                </div>
+              </div>
+            </template>
+
+            <!-- Customers -->
+            <template lwc:if={isCust}>
+              <div class="panel active">
+                <div class="sec-t">Customer Base · {data.srcCustomers} on file</div>
+                <div class="kpis">
+                  <div class="kpi"><div class="lbl">🔥 Hot leads</div><div class="val">{data.custHot.value}</div><div class="sub">{data.custHot.sub}</div></div>
+                  <div class="kpi"><div class="lbl">📇 On file</div><div class="val">{data.custScored.value}</div><div class="sub">{data.custScored.sub}</div></div>
+                  <div class="kpi"><div class="lbl">📊 Avg score</div><div class="val">{data.custAvg.value}</div><div class="sub">{data.custAvg.sub}</div></div>
+                </div>
+                <div class="sec-t mt18">Top Opportunities (by lead score)</div>
+                <template lwc:if={data.opportunities.length}>
+                  <table>
+                    <thead><tr><th>Customer</th><th>Lead score</th><th>Interest</th><th>City</th></tr></thead>
+                    <tbody>
+                      <template for:each={data.opportunities} for:item="o">
+                        <tr key={o.name}><td>{o.name}</td><td><span class={o.leadClass}>{o.leadScore}</span></td><td>{o.interest}</td><td>{o.city}</td></tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </template>
+                <template lwc:else><div class="faint">No scored opportunities for this dealer's base yet.</div></template>
+                <div class="faint mt10">Real join: dealer individuals (Dealer_Code) → CI_Lead_Score by individual_id.</div>
+              </div>
+            </template>
+
+            <!-- Model Demand -->
+            <template lwc:if={isInv}>
+              <div class="panel active">
+                <div class="sec-t">Model Demand — network · CI_Model_Popularity</div>
+                <template lwc:if={data.modelDemand.length}>
+                  <table>
+                    <thead><tr><th>Model</th><th>Views</th><th>Test drives</th><th>Finance enq.</th><th>Purchases</th><th>Interest</th></tr></thead>
+                    <tbody>
+                      <template for:each={data.modelDemand} for:item="m">
+                        <tr key={m.model}><td>{m.model}</td><td>{m.views}</td><td>{m.testDrives}</td><td>{m.finance}</td><td><b>{m.purchases}</b></td><td><div class="mbar"><span style={m.barStyle}></span></div></td></tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </template>
+                <template lwc:else><div class="faint">Model demand unavailable.</div></template>
+              </div>
+            </template>
+
+            <!-- Campaigns -->
+            <template lwc:if={isCamp}>
+              <div class="panel active">
+                <div class="sec-t">Campaign ROI — network · CI_Campaign_ROAS</div>
+                <template lwc:if={data.roas.length}>
+                  <table>
+                    <thead><tr><th>Campaign type</th><th>Channel</th><th>Revenue</th><th>Budget</th><th>ROAS</th></tr></thead>
+                    <tbody>
+                      <template for:each={data.roas} for:item="c">
+                        <tr key={c.campaignType}><td>{c.campaignType}</td><td>{c.channel}</td><td>{c.revenue}</td><td>{c.budget}</td><td><span class={c.roasClass}>{c.roas}</span></td></tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </template>
+                <template lwc:else><div class="faint">ROAS data unavailable.</div></template>
+                <template lwc:if={data.channels.length}>
+                  <div class="sec-t mt18">Channel Engagement · CI_Channel_Engagement_Rates</div>
+                  <table>
+                    <thead><tr><th>Channel</th><th>Delivery</th><th>Open</th><th>Click</th><th>Conversion</th></tr></thead>
+                    <tbody>
+                      <template for:each={data.channels} for:item="ch">
+                        <tr key={ch.channel}><td>{ch.channel}</td><td>{ch.delivery}</td><td>{ch.open}</td><td>{ch.click}</td><td>{ch.conversion}</td></tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </template>
+              </div>
+            </template>
+
+            <!-- Alerts -->
+            <template lwc:if={isAlerts}>
+              <div class="panel active">
+                <div class="sec-t">Dealer Alerts &amp; Recommendations</div>
+                <template for:each={data.alerts} for:item="n">
+                  <div key={n.title} class="nba">
+                    <div class="t"><span>{n.title}</span><span class="cf">{n.confidence}</span></div>
+                    <div class="desc">{n.description}</div>
+                    <div class="cbar"><span style={n.barStyle}></span></div>
+                  </div>
+                </template>
+              </div>
+            </template>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ RIGHT: mix + standing ============ -->
+      <div class="col">
+        <div class="card">
+          <div class="hd"><h3><span class="ic">🥧</span> Sales Mix</h3></div>
+          <div class="bd">
+            <div class="donut" style={donutStyle}></div>
+            <div class="legend">
+              <template for:each={mixLegend} for:item="s">
+                <div key={s.key} class="r"><span class="sw" style={s.style}></span>{s.label}</div>
+              </template>
+            </div>
+            <div class="faint mt10">Derived from stocked-model EV/ICE split.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3><span class="ic">🏆</span> Network Standing</h3></div>
+          <div class="bd standing">
+            <div><div class="faint">Rank in {data.state}</div><div class="v15">{data.rankLine}</div></div>
+            <div><div class="faint">Target attainment</div><div class="v15 green">{data.attainmentLine}</div></div>
+            <div><div class="faint">CSI percentile</div><div class="v15">{data.csiPercentile}</div></div>
+            <template lwc:if={data.establishedSub}><div><div class="faint">Established</div><div class="v15">{data.establishedSub}</div></div></template>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="hd"><h3><span class="ic">🔌</span> Data Sources</h3></div>
+          <div class="bd dsrc">
+            <div>● Dealer master · <b>{data.dealerId}</b></div>
+            <div>● CI_Dealer_Performance · <b>CSI / sales</b></div>
+            <div>● CI_Model_Popularity · <b>demand</b></div>
+            <div>● CI_Campaign_ROAS · <b>ROI</b></div>
+            <div>● Customers / Lead Score · <b>{data.srcCustomers} on file</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </template>
+  </div>
+</template>

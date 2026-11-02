@@ -1,0 +1,335 @@
+:host {
+    --cc-blue: #003d7a;
+    --cc-blue-hero: #0067b1;
+    --cc-green: #009fda;
+    --cc-banner: #0067b1;
+    --cc-text: #1a1a2e;
+    --cc-muted: #5b6472;
+    --cc-border: #e3e8ef;
+    --cc-bg-alt: #f2f6fb;
+    display: block;
+}
+
+.ccm-section {
+    padding: 1.5rem 1.75rem 2rem;
+    background: #ffffff;
+}
+
+.ccm-heading {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--cc-text);
+    margin: 0 0 1.1rem 0;
+}
+
+.ccm-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    border-bottom: 1px solid var(--cc-border);
+    margin-bottom: 1.5rem;
+}
+
+.ccm-tab {
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--cc-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.6rem 0.9rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.ccm-tab:hover {
+    color: var(--cc-blue);
+}
+
+.ccm-tab_active {
+    color: var(--cc-blue);
+    border-bottom-color: var(--cc-blue);
+}
+
+.ccm-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 400px;
+    gap: 2rem;
+    align-items: start;
+}
+
+.ccm-main {
+    min-width: 0;
+}
+
+.ccm-aside {
+    border: 1px solid var(--cc-border);
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
+
+.ccm-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.ccm-card {
+    background: #ffffff;
+    border: 1px solid var(--cc-border);
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ccm-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 43, 92, 0.16);
+}
+
+.ccm-card__cover {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    background: radial-gradient(120% 100% at 50% 20%, #f4f9ff 0%, #e2edf9 55%, #cfe0f3 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Accessory photos fill the whole cover (they're photographs, not cutouts) */
+.ccm-card__cover_photo {
+    background: #0c1b2e;
+}
+
+.ccm-card__cover_photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.28) 0%, transparent 34%);
+    pointer-events: none;
+}
+
+.ccm-card__badge {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    background: var(--cc-blue);
+    color: #ffffff;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+    z-index: 2;
+}
+
+/* Vehicle cutouts fill the tile, cropping edges to kill the whitespace */
+.ccm-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.25s ease;
+    filter: drop-shadow(0 8px 12px rgba(0, 43, 92, 0.2));
+}
+
+.ccm-card__img_photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: none;
+    filter: none;
+}
+
+.ccm-card:hover .ccm-card__img {
+    transform: scale(1.06);
+}
+
+.ccm-card:hover .ccm-card__img_photo {
+    transform: scale(1.06);
+}
+
+.ccm-card__body {
+    padding: 0.9rem 1rem 0.5rem;
+    flex: 1 1 auto;
+}
+
+.ccm-card__title {
+    display: block;
+    color: var(--cc-blue);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: 0.4rem;
+}
+
+.ccm-card__title:hover {
+    text-decoration: underline;
+}
+
+.ccm-card__tagline {
+    color: var(--cc-blue-hero);
+    font-size: 0.78rem;
+    font-style: italic;
+    font-weight: 600;
+    margin: 0 0 0.4rem;
+}
+
+.ccm-card__desc {
+    color: var(--cc-muted);
+    font-size: 0.82rem;
+    line-height: 1.4;
+    margin: 0 0 0.65rem;
+}
+
+.ccm-card__data {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.ccm-card__segment {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--cc-blue);
+    background: var(--cc-bg-alt);
+    border-radius: 4px;
+    padding: 0.15rem 0.5rem;
+}
+
+.ccm-card__specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.ccm-card__spec {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--cc-muted);
+    border: 1px solid var(--cc-border);
+    border-radius: 999px;
+    padding: 0.12rem 0.5rem;
+}
+
+.ccm-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1rem 0.85rem;
+}
+
+.ccm-chip {
+    display: inline-block;
+    background: var(--cc-bg-alt);
+    color: var(--cc-text);
+    border: 1px solid var(--cc-border);
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.65rem;
+}
+
+.ccm-card__star {
+    background: transparent;
+    border: none;
+    color: var(--cc-muted);
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+}
+
+.ccm-card__star:hover,
+.ccm-card__star_active {
+    color: var(--cc-banner);
+}
+
+.ccm-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.75rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.ccm-footer__pager {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.ccm-footer__label {
+    color: var(--cc-muted);
+    font-size: 0.82rem;
+}
+
+.ccm-footer__viewall {
+    color: var(--cc-blue);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.ccm-footer__viewall:hover {
+    text-decoration: underline;
+}
+
+.ccm-btn {
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.4rem 1rem;
+    cursor: pointer;
+}
+
+.ccm-btn_outline {
+    background: #ffffff;
+    border: 1px solid var(--cc-border);
+    color: var(--cc-text);
+}
+
+.ccm-btn_outline:hover:not(:disabled) {
+    border-color: var(--cc-blue);
+    color: var(--cc-blue);
+}
+
+.ccm-btn_outline:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+@media (max-width: 992px) {
+    .ccm-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .ccm-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .ccm-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ccm-section {
+        padding: 1.25rem 1rem 1.5rem;
+    }
+}

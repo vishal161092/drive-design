@@ -1,0 +1,462 @@
+<template>
+  <div class="tm-scope">
+
+    <!-- ===== Header + search (consistent with Dealer/Vehicle 360) ===== -->
+    <div class="header">
+      <div class="brand">
+        <div class="mark">T</div>
+        <div>
+          <h1>VELO MOTORS</h1>
+          <div class="tag">CUSTOMER 360 · DATA CLOUD</div>
+        </div>
+        <template lwc:if={hasData}>
+          <button class="backbtn hdr-back" onclick={goBack}>← Back to customers</button>
+        </template>
+      </div>
+      <div class="hsearch">
+        <lightning-input variant="label-hidden" type="search"
+          placeholder="Search customer by name, mobile or customer ID…"
+          value={searchTerm} onchange={handleSearch} oninput={handleSearch}></lightning-input>
+        <template lwc:if={showResults}>
+          <div class="suggest show">
+            <template for:each={results} for:item="r">
+              <div key={r.unifiedId} class="row" data-id={r.unifiedId} onclick={handleSelect}>
+                <div class="n">{r.name}</div>
+                <div class="d">{r.customerId} · {r.phoneMasked} · {r.city} · {r.tier}</div>
+              </div>
+            </template>
+          </div>
+        </template>
+      </div>
+      <div class="who">
+        <div>Unified profile</div>
+        <div class="live">● Data Cloud · unified individuals</div>
+      </div>
+    </div>
+
+    <!-- ===== States ===== -->
+    <template lwc:if={loading}><div class="state">Loading unified profile…</div></template>
+    <template lwc:if={error}><div class="state err">{error}</div></template>
+    <template lwc:if={showEmptyText}><div class="state">Search for a customer to load their live Data Cloud 360.</div></template>
+    <template lwc:if={showDirectory}>
+      <div class="cust-net">
+        <!-- stats strip -->
+        <div class="stats-strip">
+          <div class="stat-card"><div class="stat-label">Total Customers</div><div class="stat-value all">{totalCount}</div></div>
+          <div class="stat-card"><div class="stat-label">Platinum</div><div class="stat-value platinum">{platinumCount}</div></div>
+          <div class="stat-card"><div class="stat-label">Gold</div><div class="stat-value gold">{goldCount}</div></div>
+          <div class="stat-card"><div class="stat-label">Silver</div><div class="stat-value silver">{silverCount}</div></div>
+          <div class="stat-card"><div class="stat-label">Bronze</div><div class="stat-value bronze">{bronzeCount}</div></div>
+        </div>
+
+        <!-- filter bar -->
+        <div class="filter-bar">
+          <div class="filter-pills">
+            <button class={allPillClass} data-tier="all" onclick={setTier}>All</button>
+            <button class={platinumPillClass} data-tier="Platinum" onclick={setTier}>Platinum</button>
+            <button class={goldPillClass} data-tier="Gold" onclick={setTier}>Gold</button>
+            <button class={silverPillClass} data-tier="Silver" onclick={setTier}>Silver</button>
+            <button class={bronzePillClass} data-tier="Bronze" onclick={setTier}>Bronze</button>
+          </div>
+          <div class="showing-count">Showing <span>{showingCount}</span> customers</div>
+        </div>
+
+        <!-- table -->
+        <div class="table-wrap">
+          <table class="cust-table">
+            <thead>
+              <tr>
+                <th class="th-av"></th>
+                <th class={thName} data-col="name" onclick={sortBy}>Customer Name</th>
+                <th class={thCity} data-col="city" onclick={sortBy}>City</th>
+                <th class={thMobile} data-col="mobile" onclick={sortBy}>Mobile</th>
+                <th class={thCustId} data-col="customerId" onclick={sortBy}>Customer ID</th>
+                <th class={thTier} data-col="tierRank" onclick={sortBy}>Tier</th>
+                <th class={thVehicles} data-col="vehicles" onclick={sortBy}>Vehicles</th>
+                <th class={thActivity} data-col="activitySort" onclick={sortBy}>Last Activity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <template for:each={displayRows} for:item="r">
+                <tr key={r.unifiedId} data-id={r.unifiedId} onclick={handleSelect}>
+                  <td class="td-av"><div class={r.avatarClass}>{r.initials}</div></td>
+                  <td class="cust-name">{r.name}</td>
+                  <td class="cust-city">{r.city}</td>
+                  <td class="mono">{r.mobile}</td>
+                  <td class="mono">{r.customerId}</td>
+                  <td><span class={r.tierClass}>{r.tier}</span></td>
+                  <td class="vehicles">{r.vehicles}</td>
+                  <td class={r.activityClass}>{r.lastActivity}</td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </template>
+
+    <!-- ===== Body ===== -->
+    <template lwc:if={hasData}>
+    <div class="grid3">
+
+      <!-- ============ LEFT COLUMN ============ -->
+      <div class="col">
+
+        <!-- Profile card -->
+        <article class="dcard">
+          <div class="dcard__head">
+            <lightning-icon icon-name="standard:contact" size="x-small"></lightning-icon>
+            Unified Profile
+          </div>
+          <div class="dcard__body">
+            <div class="tm-tile">
+              <div class="tm-avatar">{data.initials}</div>
+              <div>
+                <div class="pname">{data.name}</div>
+                <div class="sm muted">Individual · {data.lifecycleStage}</div>
+              </div>
+            </div>
+
+            <div class="idbox">
+              <div class="sm"><span class="muted">Customer ID</span> &nbsp;<b>{data.customerId}</b></div>
+              <div class="idline">Unified Individual ID · {data.unifiedId}</div>
+            </div>
+
+            <div class="badges">
+              <span class="badge">{data.tier}</span>
+              <template lwc:if={data.leadStatus}><span class="badge warn">{data.leadStatus} Lead</span></template>
+            </div>
+
+            <ul class="rows sm">
+              <li><lightning-icon icon-name="utility:email" size="xx-small"></lightning-icon> {data.email}</li>
+              <li><lightning-icon icon-name="utility:phone_portrait" size="xx-small"></lightning-icon> {data.phoneMasked}</li>
+              <li><lightning-icon icon-name="utility:location" size="xx-small"></lightning-icon> {addressLine}</li>
+              <template lwc:if={dobLine}><li><lightning-icon icon-name="utility:event" size="xx-small"></lightning-icon> {dobLine}</li></template>
+              <template lwc:if={data.homeDealer}><li><lightning-icon icon-name="utility:company" size="xx-small"></lightning-icon> Home dealer {data.homeDealer}</li></template>
+              <template lwc:if={data.loyaltyPoints}><li><lightning-icon icon-name="utility:favorite" size="xx-small"></lightning-icon> {data.loyaltyPoints} loyalty points</li></template>
+              <template lwc:if={sinceLine}><li><lightning-icon icon-name="utility:clock" size="xx-small"></lightning-icon> {sinceLine}</li></template>
+            </ul>
+
+            <div class="sec-t">Consent</div>
+            <span class={emailConsentClass}>Email {emailConsentMark}</span>
+            <span class={waConsentClass}>WhatsApp {waConsentMark}</span>
+            <span class={smsConsentClass}>SMS {smsConsentMark}</span>
+          </div>
+        </article>
+
+        <!-- Lead Score -->
+        <article class="dcard">
+          <div class="dcard__head">
+            <lightning-icon icon-name="standard:lead" size="x-small"></lightning-icon>
+            Lead Score
+            <span class="right ci-tag">CI · Lead_Score</span>
+          </div>
+          <div class="dcard__body">
+            <div class="ring-wrap">
+              <div class="ring" style={ringStyle}>
+                <div class="in"><div class="num">{data.leadScore}</div><div class="of">/ 100</div></div>
+              </div>
+              <div class="caption">{data.leadScoreCaption}</div>
+            </div>
+            <template lwc:if={hasFactors}>
+              <div style="margin-top:.6rem">
+                <template for:each={leadFactors} for:item="f">
+                  <div key={f.key} class="factor">
+                    <div class="t"><span>{f.label} <span class="ci-tag">CI</span></span><span class="v">{f.valueText}</span></div>
+                    <div class="pbar"><span style={f.barStyle}></span></div>
+                  </div>
+                </template>
+              </div>
+            </template>
+          </div>
+        </article>
+
+        <!-- Segments & Interests -->
+        <article class="dcard">
+          <div class="dcard__head">
+            <lightning-icon icon-name="standard:segments" size="x-small"></lightning-icon>
+            Segments &amp; Interests
+            <span class="right derived">Derived</span>
+          </div>
+          <div class="dcard__body">
+            <template lwc:if={segmentBadges.length}>
+              <template for:each={segmentBadges} for:item="s">
+                <span key={s.key} class="badge light">{s.label}</span>
+              </template>
+            </template>
+            <template lwc:if={data.preferredModel}>
+              <div class="sec-t">Preferred Model <span class="ci-tag">Preferred_Model__c</span></div>
+              <span class="badge">{data.preferredModel}</span>
+            </template>
+            <template lwc:if={recentlyBrowsed.length}>
+              <div class="sec-t">Recently Browsed <span class="ci-tag">from clickstream</span></div>
+              <template for:each={recentlyBrowsed} for:item="m">
+                <span key={m.key} class="badge">{m.label}</span>
+              </template>
+            </template>
+          </div>
+        </article>
+      </div>
+
+      <!-- ============ CENTER COLUMN ============ -->
+      <div class="col">
+
+        <!-- KPI tiles -->
+        <div class="kpis">
+          <div class="kpi">
+            <div class="lbl"><lightning-icon icon-name="utility:currency" size="xx-small"></lightning-icon> Service LTV</div>
+            <div class="val">{data.serviceLtv.value}</div>
+            <div class="sub">{data.serviceLtv.sub}</div>
+          </div>
+          <div class="kpi">
+            <div class="lbl"><lightning-icon icon-name="utility:success" size="xx-small"></lightning-icon> Avg NPS</div>
+            <div class="val">{data.avgNps.value}</div>
+            <div class="sub">{data.avgNps.sub}</div>
+          </div>
+          <div class="kpi">
+            <div class="lbl"><lightning-icon icon-name="utility:trending" size="xx-small"></lightning-icon> Lead Score</div>
+            <div class="val">{data.leadScore}<span class="unit">/100</span></div>
+            <div class="sub">{data.leadScoreCaption}</div>
+          </div>
+          <div class="kpi">
+            <div class="lbl"><lightning-icon icon-name="utility:email" size="xx-small"></lightning-icon> Campaign Resp.</div>
+            <div class="val">{data.campaignResp.value}</div>
+            <div class="sub">{data.campaignResp.sub}</div>
+          </div>
+          <div class="kpi">
+            <div class="lbl"><lightning-icon icon-name="utility:priority" size="xx-small"></lightning-icon> Vehicles</div>
+            <div class="val">{data.vehicles.value}</div>
+            <div class="sub">{data.vehicles.sub}</div>
+          </div>
+          <div class="kpi">
+            <div class="lbl"><lightning-icon icon-name="utility:warning" size="xx-small"></lightning-icon> Critical Faults</div>
+            <div class="val green">{data.criticalFaults.value}</div>
+            <div class="sub">{data.criticalFaults.sub}</div>
+          </div>
+        </div>
+
+        <!-- Lead status stepper -->
+        <article class="dcard">
+          <div class="dcard__head">
+            <lightning-icon icon-name="standard:process" size="x-small"></lightning-icon>
+            Lead Status
+            <span class="right ci-tag">Lead_Status__c = {data.leadStatus}</span>
+          </div>
+          <div class="dcard__body">
+            <div class="stepper">
+              <template for:each={steps} for:item="st">
+                <div key={st.key} class={st.cls}>{st.label}</div>
+              </template>
+            </div>
+          </div>
+        </article>
+
+        <!-- Tabs -->
+        <article class="dcard">
+          <ul class="tabs__nav">
+            <li class={ovTabClass} data-tab="ov" onclick={handleTab}><span class="tabs__link">Overview</span></li>
+            <li class={vehTabClass} data-tab="veh" onclick={handleTab}><span class="tabs__link">Vehicles</span></li>
+            <li class={svcTabClass} data-tab="svc" onclick={handleTab}><span class="tabs__link">Service</span></li>
+            <li class={campTabClass} data-tab="camp" onclick={handleTab}><span class="tabs__link">Campaigns</span></li>
+            <li class={aiTabClass} data-tab="ai" onclick={handleTab}><span class="tabs__link">AI Insights</span></li>
+          </ul>
+
+          <!-- Overview -->
+          <template lwc:if={isOv}>
+            <div class="tabs__panel">
+              <div class="agentbox">
+                <div class="hd"><lightning-icon icon-name="utility:einstein" size="xx-small"></lightning-icon> Agentforce summary</div>
+                {data.agentSummary}
+              </div>
+
+              <div class="sec-t">Vehicles Owned</div>
+              <template lwc:if={vehicleCards.length}>
+                <template for:each={vehicleCards} for:item="v">
+                  <div key={v.key} class="veh-row">
+                    <template lwc:if={v.img}><div class="veh-thumb"><img src={v.img} alt={v.title}></div></template>
+                    <div>
+                      <div class="vtitle">{v.title}</div>
+                      <div class="sm muted">{v.specLine}</div>
+                    </div>
+                  </div>
+                </template>
+              </template>
+              <template lwc:else><div class="sm muted">No vehicles on record for this individual yet.</div></template>
+
+              <div class="sec-t">At a Glance</div>
+              <div class="ovsum">
+                <div class="ov">
+                  <div class="l"><lightning-icon icon-name="utility:clock" size="xx-small"></lightning-icon> Service — recency</div>
+                  <div class="v">{glance.serviceTitle}</div>
+                  <div class="s">{glance.serviceSub}</div>
+                </div>
+                <div class="ov">
+                  <div class="l"><lightning-icon icon-name="utility:warning" size="xx-small"></lightning-icon> Critical faults</div>
+                  <div class="v">{data.criticalFaults.value}</div>
+                  <div class="s">{data.criticalFaults.sub}</div>
+                </div>
+                <template lwc:if={topNba}>
+                  <div class="ov wide">
+                    <div class="l"><lightning-icon icon-name="utility:einstein" size="xx-small"></lightning-icon> Next Best Action</div>
+                    <div class="v">{topNba.title}</div>
+                    <div class="s">{topNba.confidence}% propensity</div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </template>
+
+          <!-- Vehicles -->
+          <template lwc:if={isVeh}>
+            <div class="tabs__panel">
+              <div class="sec-t">Vehicle Portfolio · {data.srcVehicles} vehicles <span class="ci-tag">image by Model</span></div>
+              <template lwc:if={vehicleCards.length}>
+                <template for:each={vehicleCards} for:item="v">
+                  <div key={v.key} class="vcard">
+                    <template lwc:if={v.img}><div class="vimg"><img src={v.img} alt={v.title}></div></template>
+                    <div class="vmeta">
+                      <div class="vh">{v.title}</div>
+                      <div class="vspec">
+                        <span>Reg <b>{v.reg}</b></span>
+                        <span>Odometer <b>{v.odometer}</b></span>
+                        <template lwc:if={v.year}><span>Year <b>{v.year}</b></span></template>
+                        <template lwc:if={v.fuel}><span>Fuel <b>{v.fuel}</b></span></template>
+                      </div>
+                      <template lwc:if={v.tags.length}>
+                        <div class="vtags">
+                          <template for:each={v.tags} for:item="t">
+                            <span key={t.key} class={t.cls}>{t.label}</span>
+                          </template>
+                        </div>
+                      </template>
+                    </div>
+                  </div>
+                </template>
+              </template>
+              <template lwc:else><div class="sm muted">No vehicles on record for this individual yet.</div></template>
+            </div>
+          </template>
+
+          <!-- Service -->
+          <template lwc:if={isSvc}>
+            <div class="tabs__panel">
+              <template lwc:if={serviceRows.length}>
+                <div class="sec-t">Service History · {data.srcServices} visits</div>
+                <table class="dtable">
+                  <thead><tr><th>Date</th><th>Vehicle</th><th>Category</th><th>Type</th><th>Dealer</th><th>Amount</th><th>NPS</th></tr></thead>
+                  <tbody>
+                    <template for:each={serviceRows} for:item="s">
+                      <tr key={s.key}>
+                        <td>{s.svcDate}</td><td>{s.vehicle}</td><td>{s.category}</td>
+                        <td>{s.svcType}</td><td>{s.dealer}</td><td>{s.amount}</td><td>{s.nps}</td>
+                      </tr>
+                    </template>
+                  </tbody>
+                </table>
+              </template>
+              <template lwc:else><div class="sm muted">No service history — this individual has not serviced a vehicle with us yet.</div></template>
+            </div>
+          </template>
+
+          <!-- Campaigns -->
+          <template lwc:if={isCamp}>
+            <div class="tabs__panel">
+              <template lwc:if={campaignRows.length}>
+                <div class="sec-t">Campaign Interactions · {data.srcCampaigns} sent</div>
+                <table class="dtable">
+                  <thead><tr><th>Sent</th><th>Campaign</th><th>Channel</th><th>Delivered</th><th>Opened</th><th>Clicked</th></tr></thead>
+                  <tbody>
+                    <template for:each={campaignRows} for:item="c">
+                      <tr key={c.key}>
+                        <td>{c.sentDate}</td><td>{c.campaignId}</td><td>{c.channel}</td>
+                        <td>{c.deliveredMark}</td><td>{c.openedMark}</td><td>{c.clickedMark}</td>
+                      </tr>
+                    </template>
+                  </tbody>
+                </table>
+              </template>
+              <template lwc:else><div class="sm muted">No campaign interactions yet.</div></template>
+            </div>
+          </template>
+
+          <!-- AI Insights -->
+          <template lwc:if={isAi}>
+            <div class="tabs__panel">
+              <div class="sec-t">AI-Powered Next Best Actions</div>
+              <template for:each={nbaCards} for:item="n">
+                <div key={n.key} class="nba">
+                  <div class="t"><span>{n.title}</span><span class="pct">{n.confidence}%</span></div>
+                  <div class="desc">{n.description}</div>
+                  <div class="cbar"><span style={n.barStyle}></span></div>
+                </div>
+              </template>
+              <div class="sm muted" style="margin-top:.6rem">Heuristics over real CIs / fields; swap to ML output when Propensity / Product-Recommendation models are built.</div>
+            </div>
+          </template>
+        </article>
+      </div>
+
+      <!-- ============ RIGHT COLUMN ============ -->
+      <div class="col">
+
+        <!-- Sales Opportunity -->
+        <article class="dcard">
+          <div class="dcard__head">
+            <lightning-icon icon-name="standard:opportunity" size="x-small"></lightning-icon>
+            Sales Opportunity
+          </div>
+          <div class="dcard__body">
+            <dl class="dl">
+              <dt>Preferred model</dt><dd>{prefModelDisp}</dd>
+              <dt>Lead source</dt><dd>{leadSourceDisp}</dd>
+              <dt>Lead status</dt><dd>{leadStatusDisp}</dd>
+              <dt>Trade-in</dt><dd>{tradeInDisp}</dd>
+              <dt>Home dealer</dt><dd>{homeDealerDisp}</dd>
+            </dl>
+          </div>
+        </article>
+
+        <!-- Activity Timeline -->
+        <article class="dcard">
+          <div class="dcard__head">
+            <lightning-icon icon-name="standard:activity" size="x-small"></lightning-icon>
+            Activity Timeline
+            <span class="right ci-tag">4 sources merged</span>
+          </div>
+          <div class="dcard__body">
+            <div style="margin-bottom:.6rem">
+              <span class="src src-camp">Campaign</span><span class="src src-dig">Digital</span><span class="src src-svc">Service</span><span class="src src-web">Web</span>
+            </div>
+            <template lwc:if={timelineItems.length}>
+              <div class="atl">
+                <template for:each={timelineItems} for:item="a">
+                  <div key={a.key} class={a.itemClass}>
+                    <div class="d">{a.dateLine}</div>
+                    <div class="c"><span class={a.srcClass}>{a.srcLabel}</span>{a.title}</div>
+                  </div>
+                </template>
+              </div>
+            </template>
+            <template lwc:else><div class="sm muted">No recorded activity yet.</div></template>
+          </div>
+        </article>
+
+        <!-- Data Sources -->
+        <article class="dcard">
+          <div class="dcard__head">
+            <lightning-icon icon-name="standard:data_streams" size="x-small"></lightning-icon>
+            Data Sources
+          </div>
+          <div class="dcard__body dsrc">
+            <p><span class="dot">●</span>Customer CRM · <b>{data.customerId}</b></p>
+            <p><span class="dot">●</span>Vehicle &amp; Telematics · <b>{data.srcVehicles} vehicles</b></p>
+            <p><span class="dot">●</span>Service Cloud · <b>{data.srcServices} appointments</b></p>
+            <p><span class="dot">●</span>Digital / Web clickstream · <b>{data.srcDigital} events</b></p>
+            <p><span class="dot">●</span>Campaign responses · <b>{data.srcCampaigns} sends</b></p>
+          </div>
+        </article>
+      </div>
+    </div>
+    </template>
+  </div>
+</template>

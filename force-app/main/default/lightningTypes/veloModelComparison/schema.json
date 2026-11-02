@@ -1,0 +1,5 @@
+{
+  "title" : "Velo Model Comparison Response",
+  "description" : "Renders a side-by-side comparison of two or more Velo models across price, fuel, mileage, seating, safety, and transmission",
+  "lightning:type" : "@apexClassType/c__Velo_ModelComparisonInfo"
+}

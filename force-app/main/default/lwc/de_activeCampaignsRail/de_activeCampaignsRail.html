@@ -1,0 +1,119 @@
+<template>
+    <div class="ccr-rail">
+        <div class="ccr-tabs" role="tablist">
+            <template for:each={tabs} for:item="tab">
+                <button
+                    key={tab.value}
+                    type="button"
+                    class={tab.cssClass}
+                    data-value={tab.value}
+                    onclick={handleTabClick}
+                >
+                    {tab.label}
+                </button>
+            </template>
+        </div>
+
+        <div class="ccr-body">
+            <!-- Campaigns tab -->
+            <template if:true={isCampaignsTab}>
+                <h3 class="ccr-subheading">ALL ACTIVE CAMPAIGNS</h3>
+
+                <template if:true={hasCampaignError}>
+                    <p class="ccr-empty ccr-empty_error">{campaignError}</p>
+                </template>
+
+                <template if:true={showCampaignsEmpty}>
+                    <p class="ccr-empty">No active campaigns to show right now.</p>
+                </template>
+
+                <template if:true={hasCampaigns}>
+                    <table class="ccr-table">
+                        <thead>
+                            <tr>
+                                <th>Campaign Name</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={campaigns} for:item="campaign">
+                                <tr key={campaign.Id}>
+                                    <td>
+                                        <a href="#" class="ccr-link" data-id={campaign.Id} onclick={handleCampaignClick}>{campaign.Name}</a>
+                                    </td>
+                                    <td>{campaign.StartDate}</td>
+                                    <td>{campaign.EndDate}</td>
+                                    <td>{campaign.Type}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </template>
+
+                <a href="#" class="ccr-viewall" onclick={handleLinkClick}>View All</a>
+            </template>
+
+            <!-- Collateral tab -->
+            <template if:true={isCollateralTab}>
+                <h3 class="ccr-subheading">COLLATERAL</h3>
+                <ul class="ccr-doclist">
+                    <template for:each={collateralItems} for:item="doc">
+                        <li key={doc.id} class="ccr-doclist__item">
+                            <svg viewBox="0 0 24 24" width="16" height="16" class="ccr-doclist__icon" aria-hidden="true">
+                                <path
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.6"
+                                    d="M6 2.5h8l4 4V21a.5.5 0 0 1-.5.5h-11A.5.5 0 0 1 6 21V3a.5.5 0 0 1 .5-.5Z"
+                                />
+                                <path fill="none" stroke="currentColor" stroke-width="1.6" d="M14 2.5V7h4" />
+                            </svg>
+                            <a href="#" class="ccr-link" onclick={handleLinkClick}>{doc.name}</a>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+
+            <!-- Shared Files tab -->
+            <template if:true={isSharedFilesTab}>
+                <div class="ccr-shared">
+                    <ul class="ccr-sidenav">
+                        <template for:each={sharedNavItemsFormatted} for:item="navItem">
+                            <li key={navItem.id}>
+                                <button
+                                    type="button"
+                                    class={navItem.cssClass}
+                                    data-id={navItem.id}
+                                    onclick={handleNavClick}
+                                >
+                                    {navItem.label}
+                                </button>
+                            </li>
+                        </template>
+                    </ul>
+                    <div class="ccr-shared__main">
+                        <table class="ccr-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Owner</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={sharedFiles} for:item="file">
+                                    <tr key={file.id}>
+                                        <td><a href="#" class="ccr-link" onclick={handleLinkClick}>{file.title}</a></td>
+                                        <td>{file.owner}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                        <a href="#" class="ccr-viewall" onclick={handleLinkClick}>Upload Files</a>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

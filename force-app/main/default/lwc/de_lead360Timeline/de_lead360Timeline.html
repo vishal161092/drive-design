@@ -1,0 +1,21 @@
+<template>
+    <div class="card">
+        <div class="card-header">🕐 Activity Timeline</div>
+        <div class="card-body">
+            <div class="vtl-track">
+                <template for:each={events} for:item="e">
+                    <div class={e.eventClass} key={e.key}>
+                        <div class="vtl-dot"></div>
+                        <div class="vtl-content">
+                            <div class="vtl-label">{e.label}</div>
+                            <div class="vtl-meta">
+                                <span class="vtl-date">{e.date}</span>
+                                <span class={e.channelClass}>{e.channelLabel}</span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

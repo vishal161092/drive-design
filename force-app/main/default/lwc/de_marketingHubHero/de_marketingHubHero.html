@@ -1,0 +1,13 @@
+<template>
+    <div class="cc-hero">
+        <div class="cc-hero__video" style={heroStyle}></div>
+        <div class="cc-hero__overlay"></div>
+        <div class="cc-hero__content">
+            <h1 class="cc-hero__title">{title}</h1>
+            <p class="cc-hero__subtitle">{subtitle}</p>
+            <template if:true={hasCta}>
+                <a class="cc-btn cc-btn--green" href={ctaUrl}>{ctaLabel}</a>
+            </template>
+        </div>
+    </div>
+</template>

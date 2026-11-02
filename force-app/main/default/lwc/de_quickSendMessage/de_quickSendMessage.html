@@ -1,0 +1,127 @@
+<template>
+    <div class="cc-qsm">
+        <!-- Header -->
+        <div class="cc-qsm__header">
+            <div class="cc-qsm__header-left">
+                <p class="cc-qsm__eyebrow">{recordLabel}</p>
+                <h1 class="cc-qsm__title">{recordTitle}</h1>
+            </div>
+            <div class="cc-qsm__header-actions">
+                <a href="javascript:void(0);" class="cc-qsm__action-link" onclick={handleNewLeadReferral}>New Lead &amp; Referral</a>
+                <a href="javascript:void(0);" class="cc-qsm__action-link" onclick={handleEdit}>Edit</a>
+                <a href="javascript:void(0);" class="cc-qsm__action-link" onclick={handlePrintableView}>Printable View</a>
+                <button class="cc-qsm__caret-btn" title="More Actions" onclick={handleMoreActions}>
+                    <lightning-icon icon-name="utility:down" size="x-small" alternative-text="More Actions"></lightning-icon>
+                </button>
+            </div>
+        </div>
+
+        <!-- Two column layout -->
+        <div class="cc-qsm__columns">
+            <!-- LEFT column -->
+            <div class="cc-qsm__col">
+                <div class="cc-card">
+                    <div class="cc-card__header">
+                        <h2 class="cc-card__title">Audience</h2>
+                    </div>
+                    <div class="cc-card__body">
+                        <div class="cc-qsm__tabs">
+                            <span class="cc-qsm__tab cc-qsm__tab--active">Single Send</span>
+                        </div>
+                        <p class="cc-qsm__field-label">Select an audience</p>
+                        <div class="cc-qsm__recipient-row">
+                            <div class="cc-qsm__lookup">
+                                <!-- No contact selected: searchable input + results -->
+                                <template if:false={selectedContact}>
+                                    <div class="cc-qsm__combobox">
+                                        <lightning-icon icon-name="utility:search" size="x-small" class="cc-qsm__combobox-icon"></lightning-icon>
+                                        <input
+                                            type="search"
+                                            class="cc-qsm__lookup-input"
+                                            placeholder="Search Contacts..."
+                                            value={searchTerm}
+                                            oninput={handleSearchInput}
+                                            onfocus={handleSearchFocus}
+                                            onblur={handleSearchBlur}
+                                        />
+                                    </div>
+                                    <template if:true={showDropdown}>
+                                        <ul class="cc-qsm__dropdown">
+                                            <template for:each={results} for:item="c">
+                                                <li
+                                                    key={c.Id}
+                                                    class="cc-qsm__dropdown-item"
+                                                    data-id={c.Id}
+                                                    data-name={c.Name}
+                                                    data-detail={c.detail}
+                                                    onclick={handleSelectContact}
+                                                >
+                                                    <span class="cc-qsm__dropdown-name">{c.Name}</span>
+                                                    <span class="cc-qsm__dropdown-detail">{c.detail}</span>
+                                                </li>
+                                            </template>
+                                            <template if:true={showNoResults}>
+                                                <li class="cc-qsm__dropdown-empty">No contacts found</li>
+                                            </template>
+                                        </ul>
+                                    </template>
+                                </template>
+
+                                <!-- Contact selected: show it as a pill -->
+                                <template if:true={selectedContact}>
+                                    <div class="cc-qsm__selected">
+                                        <lightning-icon icon-name="standard:contact" size="small" class="cc-qsm__selected-icon"></lightning-icon>
+                                        <div class="cc-qsm__selected-meta">
+                                            <span class="cc-qsm__selected-name">{selectedContact.Name}</span>
+                                            <span class="cc-qsm__selected-detail">{selectedContact.detail}</span>
+                                        </div>
+                                        <button class="cc-qsm__selected-remove" title="Remove" onclick={handleClearContact}>
+                                            <lightning-icon icon-name="utility:close" size="xx-small" alternative-text="Remove"></lightning-icon>
+                                        </button>
+                                    </div>
+                                </template>
+                            </div>
+                            <button class="cc-qsm__icon-btn" title="Edit Recipient" onclick={handleAudienceEdit}>
+                                <lightning-icon icon-name="utility:edit" size="x-small" alternative-text="Edit"></lightning-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cc-card cc-card--collapsed">
+                    <div class="cc-card__header">
+                        <lightning-icon icon-name="utility:chevronright" size="xx-small" class="cc-card__chevron"></lightning-icon>
+                        <h2 class="cc-card__title">Bulk Send Jobs (0)</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT column -->
+            <div class="cc-qsm__col">
+                <div class="cc-card">
+                    <div class="cc-card__header">
+                        <h2 class="cc-card__title">Quick Send Setting</h2>
+                        <button class="cc-qsm__star-btn" title="Favorite" onclick={handleToggleFavorite}>
+                            <lightning-icon icon-name="utility:favorite" size="x-small" alternative-text="Favorite"></lightning-icon>
+                        </button>
+                    </div>
+                    <div class="cc-card__body">
+                        <p class="cc-qsm__subtext">Quick Send Defaults</p>
+                        <p class="cc-qsm__helper">Set personalization default values for this Quick Send.</p>
+                        <div class="cc-qsm__button-row">
+                            <button class="cc-btn cc-btn--blue" onclick={handleSettingEdit}>Edit</button>
+                            <button class="cc-btn cc-btn--gray" onclick={handleClearDefaults}>Clear Defaults</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cc-card cc-card--collapsed">
+                    <div class="cc-card__header">
+                        <lightning-icon icon-name="utility:chevronright" size="xx-small" class="cc-card__chevron"></lightning-icon>
+                        <h2 class="cc-card__title">Scheduled Send (0)</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
